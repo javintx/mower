@@ -13,5 +13,6 @@ public class ExecuteMowerCommandsInPlateau {
       mower.executeCommand(command);
       plateau.verifyCoordinates(mower.coordinates());
     }
+    plateau.occupyCoordinate(mower.coordinates());
   }
 }

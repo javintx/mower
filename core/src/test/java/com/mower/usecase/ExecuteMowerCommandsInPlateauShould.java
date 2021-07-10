@@ -1,31 +1,38 @@
 package com.mower.usecase;
 
-import com.mower.domain.CardinalPoint;
 import com.mower.domain.Command;
 import com.mower.domain.Mower;
 import com.mower.domain.Plateau;
+import com.mower.domain.exception.CoordinatesAreOccupied;
+import com.mower.domain.exception.CoordinatesAreOutsidePlateau;
 import com.mower.domain.valueobjects.Coordinates;
-import com.mower.domain.valueobjects.FaceTo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.internal.verification.Times;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 
-import static com.mower.domain.CardinalPoint.NORTH;
 import static com.mower.domain.Command.LEFT;
 import static com.mower.domain.Command.MOVE;
 import static com.mower.domain.Command.RIGHT;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+@ExtendWith(MockitoExtension.class)
 public class ExecuteMowerCommandsInPlateauShould {
 
-  public static final int FINAL_MOWER_COORDINATE_X = 1;
-  public static final int FINAL_MOWER_COORDINATE_Y = 3;
-  public static final int INITIAL_MOWER_COORDINATE_X = 1;
-  public static final int INITIAL_MOWER_COORDINATE_Y = 2;
-  public static final int PLATEAU_WIDTH = 5;
-  public static final int PLATEAU_HEIGHT = 5;
-  private static final CardinalPoint CARDINAL_POINT = NORTH;
+  @Mock
+  Plateau plateauMocked;
+  @Mock
+  Mower mowerMocked;
+  @Mock
+  Coordinates coordinatesMocked;
   private ExecuteMowerCommandsInPlateau executeMowerCommandsInPlateau;
 
   @BeforeEach
@@ -34,33 +41,41 @@ public class ExecuteMowerCommandsInPlateauShould {
   }
 
   @Test
-  void executeWithPlateauMowerAndCommands() {
-    var mower = mower();
-    this.executeMowerCommandsInPlateau.executeWith(plateau(), mower, commands());
-    assertEquals(finalMowerCoordinates(), mower.coordinates());
+  void executeWithoutCommands() {
+    when(mowerMocked.coordinates()).thenReturn(coordinatesMocked);
+    this.executeMowerCommandsInPlateau.executeWith(plateauMocked, mowerMocked, emptyCommands());
+    verify(plateauMocked, new Times(emptyCommands().size())).verifyCoordinates(any(Coordinates.class));
+    verify(mowerMocked, new Times(emptyCommands().size())).executeCommand(any(Command.class));
+    verify(plateauMocked).occupyCoordinate(any(Coordinates.class));
   }
 
   @Test
-  void executeWithPlateauMowerAndWithoutCommands() {
-    var mower = mower();
-    this.executeMowerCommandsInPlateau.executeWith(plateau(), mower, emptyCommands());
-    assertEquals(mower().coordinates(), mower.coordinates());
+  void executeWithCommands() {
+    when(mowerMocked.coordinates()).thenReturn(coordinatesMocked);
+    this.executeMowerCommandsInPlateau.executeWith(plateauMocked, mowerMocked, commands());
+    verify(plateauMocked, new Times(commands().size())).verifyCoordinates(any(Coordinates.class));
+    verify(mowerMocked, new Times(commands().size())).executeCommand(any(Command.class));
+    verify(plateauMocked).occupyCoordinate(any(Coordinates.class));
   }
 
-  private Plateau plateau() {
-    return new Plateau(PLATEAU_WIDTH, PLATEAU_HEIGHT);
+  @Test
+  void executeWithThrowCoordinatesAreOutsidePlateau() {
+    when(mowerMocked.coordinates()).thenReturn(coordinatesMocked);
+    doThrow(CoordinatesAreOutsidePlateau.class).when(plateauMocked).verifyCoordinates(any(Coordinates.class));
+    assertThrows(CoordinatesAreOutsidePlateau.class, () -> this.executeMowerCommandsInPlateau.executeWith(plateauMocked, mowerMocked, commands()));
+    verify(mowerMocked, new Times(1)).executeCommand(any(Command.class));
+    verify(mowerMocked, new Times(1)).coordinates();
+    verify(plateauMocked, new Times(0)).occupyCoordinate(any(Coordinates.class));
   }
 
-  private Mower mower() {
-    return new Mower(coordinates(), faceTo());
-  }
-
-  private Coordinates coordinates() {
-    return new Coordinates(INITIAL_MOWER_COORDINATE_X, INITIAL_MOWER_COORDINATE_Y);
-  }
-
-  private FaceTo faceTo() {
-    return new FaceTo(CARDINAL_POINT);
+  @Test
+  void executeWithThrowCoordinatesAreOccupied() {
+    when(mowerMocked.coordinates()).thenReturn(coordinatesMocked);
+    doThrow(CoordinatesAreOccupied.class).when(plateauMocked).verifyCoordinates(any(Coordinates.class));
+    assertThrows(CoordinatesAreOccupied.class, () -> this.executeMowerCommandsInPlateau.executeWith(plateauMocked, mowerMocked, commands()));
+    verify(mowerMocked, new Times(1)).executeCommand(any(Command.class));
+    verify(mowerMocked, new Times(1)).coordinates();
+    verify(plateauMocked, new Times(0)).occupyCoordinate(any(Coordinates.class));
   }
 
   private List<Command> commands() {
@@ -71,7 +86,4 @@ public class ExecuteMowerCommandsInPlateauShould {
     return List.of();
   }
 
-  private Coordinates finalMowerCoordinates() {
-    return new Coordinates(FINAL_MOWER_COORDINATE_X, FINAL_MOWER_COORDINATE_Y);
-  }
 }

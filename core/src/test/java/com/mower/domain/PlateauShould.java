@@ -1,5 +1,6 @@
 package com.mower.domain;
 
+import com.mower.domain.exception.CoordinatesAreOccupied;
 import com.mower.domain.exception.CoordinatesAreOutsidePlateau;
 import com.mower.domain.exception.PlateauSizeMustBePositiveNumbers;
 import com.mower.domain.valueobjects.Coordinates;
@@ -38,6 +39,11 @@ public class PlateauShould {
   }
 
   @Test
+  void throwCoordinatesAreOccupiedIfCoordinatesAreOccupiedInThePlateau() {
+    assertThrows(CoordinatesAreOccupied.class, () -> validPlateauWithOccupiedCoordinate().verifyCoordinates(validCoordinates()));
+  }
+
+  @Test
   void verifyCoordinates() {
     validPlateau().verifyCoordinates(validCoordinates());
   }
@@ -48,6 +54,12 @@ public class PlateauShould {
 
   private Plateau validPlateau() {
     return new Plateau(VALID_PLATEAU_WIDTH, VALID_PLATEAU_HEIGHT);
+  }
+
+  private Plateau validPlateauWithOccupiedCoordinate() {
+    var plateau = new Plateau(VALID_PLATEAU_WIDTH, VALID_PLATEAU_HEIGHT);
+    plateau.occupyCoordinate(validCoordinates());
+    return plateau;
   }
 
   private Coordinates outsideCoordinates() {

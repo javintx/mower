@@ -21,12 +21,14 @@ And the mower could face to one of the cardinal points:
 ## Assumptions
 
 - The mower executes the command and then verify if it has any problem.
+    - When mower move outside the plateau, the mower stops and does not occupy any coordinate in the plateau.
+    - When mower crashed with any previous mower, the mower stops and occupy the same coordinate as crashed mower.
 
 ## Architecture
 
 - Hexagonal architecture implemented with TDD in Java 11.
 - JUnit5 with Mockito is used for unit tests.
-  + mock-maker-inline extension used for final classes.
+    + mock-maker-inline extension used for final classes.
 
 ### Core hexagon
 
@@ -69,9 +71,8 @@ Where "MODULE_NAME" could be each module of the mower application.
 
 # TO-DO
 
-- Refactor the "execute mower commands in plateau" use case
-- Add more business validations:
-    + Coordinates occupied
 - Add application hexagon
     + Command console application
 - Add e2e tests
+- Plateau could have 2 coordinates to define the size
+    + The verifyAreInside method in the plateau could be moved to Coordinates class.
