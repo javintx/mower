@@ -71,8 +71,13 @@ Where "MODULE_NAME" could be each module of the mower application.
 
 # TO-DO
 
-- Add application hexagon
-    + Command console application
+- Implement app hexagon
+    + Console application: Have a dependency with command console.
+    + Command console: Read user input print application help. May be could be moved to infrastructure layer?
+- Create executable application jar.
+- Complete README.md
 - Add e2e tests
 - Plateau could have 2 coordinates to define the size
     + The verifyAreInside method in the plateau could be moved to Coordinates class.
+- Coordinates could have their own situation method and with the previous improvement, the coordinateX and coordinateY
+  methods in Coordinates class could be deleted.

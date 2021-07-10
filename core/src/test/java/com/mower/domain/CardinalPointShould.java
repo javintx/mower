@@ -39,4 +39,24 @@ public class CardinalPointShould {
     assertSame(WEST, CardinalPoint.fromCode("W"));
   }
 
+  @Test
+  void returnNorthCode() {
+    assertSame("N", NORTH.code());
+  }
+
+  @Test
+  void returnEastCode() {
+    assertSame("E", EAST.code());
+  }
+
+  @Test
+  void returnSouthCode() {
+    assertSame("S", SOUTH.code());
+  }
+
+  @Test
+  void returnWestCode() {
+    assertSame("W", WEST.code());
+  }
+
 }

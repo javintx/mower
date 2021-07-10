@@ -31,4 +31,8 @@ public class Mower {
   public void spinLeft() {
     this.faceTo.spinLeft();
   }
+
+  public String situation() {
+    return coordinates.coordinateX() + " " + coordinates.coordinateY() + " " + faceTo.orientation().code();
+  }
 }

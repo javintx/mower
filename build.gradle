@@ -6,6 +6,17 @@ wrapper {
     gradleVersion = "7.1.1"
 }
 
+dependencies {
+    implementation project(":app")
+    implementation project(":core")
+}
+
+jar {
+    from {
+        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+}
+
 allprojects {
     group "com.mower"
     version "1.0.0"

@@ -8,6 +8,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static com.mower.domain.CardinalPoint.NORTH;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
@@ -19,6 +20,7 @@ public class MowerShould {
   private static final int COORDINATE_X = 1;
   private static final int COORDINATE_Y = 2;
   private static final CardinalPoint CARDINAL_POINT = NORTH;
+  public static final String EXPECTED_MOWER_SITUATION = "1 2 N";
 
   @Mock
   Command commandMocked;
@@ -58,6 +60,11 @@ public class MowerShould {
     doNothing().when(coordinatesMocked).moveTowards(any(CardinalPoint.class));
     anyMowerWithCoordinatesMocked().moveForward();
     verify(coordinatesMocked).moveTowards(any(CardinalPoint.class));
+  }
+
+  @Test
+  void returnSituation() {
+    assertThat(anyMower().situation()).isEqualTo(EXPECTED_MOWER_SITUATION);
   }
 
   private Mower anyMower() {
