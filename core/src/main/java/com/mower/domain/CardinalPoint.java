@@ -19,8 +19,4 @@ public enum CardinalPoint {
         .findAny()
         .orElseThrow(() -> new UnknownCardinalPointCode(cardinalPointCode));
   }
-
-  public String code() {
-    return code;
-  }
 }

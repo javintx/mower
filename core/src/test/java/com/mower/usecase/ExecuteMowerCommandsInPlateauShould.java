@@ -2,9 +2,10 @@ package com.mower.usecase;
 
 import com.mower.domain.CardinalPoint;
 import com.mower.domain.Command;
-import com.mower.domain.Coordinates;
 import com.mower.domain.Mower;
 import com.mower.domain.Plateau;
+import com.mower.domain.valueobjects.Coordinates;
+import com.mower.domain.valueobjects.FaceTo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -51,15 +52,15 @@ public class ExecuteMowerCommandsInPlateauShould {
   }
 
   private Mower mower() {
-    return new Mower(coordinates(), cardinalPoint());
+    return new Mower(coordinates(), faceTo());
   }
 
   private Coordinates coordinates() {
     return new Coordinates(INITIAL_MOWER_COORDINATE_X, INITIAL_MOWER_COORDINATE_Y);
   }
 
-  private CardinalPoint cardinalPoint() {
-    return CARDINAL_POINT;
+  private FaceTo faceTo() {
+    return new FaceTo(CARDINAL_POINT);
   }
 
   private List<Command> commands() {

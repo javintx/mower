@@ -1,182 +1,82 @@
 package com.mower.domain;
 
+import com.mower.domain.valueobjects.Coordinates;
+import com.mower.domain.valueobjects.FaceTo;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
-import static com.mower.domain.CardinalPoint.EAST;
 import static com.mower.domain.CardinalPoint.NORTH;
-import static com.mower.domain.CardinalPoint.SOUTH;
-import static com.mower.domain.CardinalPoint.WEST;
-import static com.mower.domain.Command.LEFT;
-import static com.mower.domain.Command.MOVE;
-import static com.mower.domain.Command.RIGHT;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
 
+@ExtendWith(MockitoExtension.class)
 public class MowerShould {
 
   private static final int COORDINATE_X = 1;
   private static final int COORDINATE_Y = 2;
+  private static final CardinalPoint CARDINAL_POINT = NORTH;
+
+  @Mock
+  Command commandMocked;
+  @Mock
+  FaceTo faceToMocked;
+  @Mock
+  Coordinates coordinatesMocked;
 
   @Test
   void returnCoordinates() {
-    assertEquals(coordinates(), mowerOrientedToNorth().coordinates());
+    assertEquals(anyCoordinates(), anyMower().coordinates());
   }
 
   @Test
-  void executeMoveCommand() {
-    var mower = mowerOrientedToNorth();
-    mower.executeCommand(MOVE);
-    assertEquals(mowerMovedToNorth().coordinates(), mower.coordinates());
+  void executeCommand() {
+    doNothing().when(commandMocked).execute(any(Mower.class));
+    anyMower().executeCommand(commandMocked);
+    verify(commandMocked).execute(any(Mower.class));
   }
 
   @Test
-  void executeRightCommand() {
-    var mower = mowerOrientedToNorth();
-    mower.executeCommand(RIGHT);
-    assertSame(mowerOrientedToEast().cardinalPoint(), mower.cardinalPoint());
+  void spinLeft() {
+    doNothing().when(faceToMocked).spinLeft();
+    anyMowerWithFaceToMocked().spinLeft();
+    verify(faceToMocked).spinLeft();
   }
 
   @Test
-  void executeLeftCommand() {
-    var mower = mowerOrientedToNorth();
-    mower.executeCommand(LEFT);
-    assertSame(mowerMovedToWest().cardinalPoint(), mower.cardinalPoint());
+  void spinRight() {
+    doNothing().when(faceToMocked).spinRight();
+    anyMowerWithFaceToMocked().spinRight();
+    verify(faceToMocked).spinRight();
   }
 
   @Test
-  void spinLeftFromNorth() {
-    var mower = mowerOrientedToNorth();
-    mower.spinLeft();
-    assertSame(mowerOrientedToWest().cardinalPoint(), mower.cardinalPoint());
+  void moveForward() {
+    doNothing().when(coordinatesMocked).moveTowards(any(CardinalPoint.class));
+    anyMowerWithCoordinatesMocked().moveForward();
+    verify(coordinatesMocked).moveTowards(any(CardinalPoint.class));
   }
 
-  @Test
-  void spinLeftFromEast() {
-    var mower = mowerOrientedToEast();
-    mower.spinLeft();
-    assertSame(mowerOrientedToNorth().cardinalPoint(), mower.cardinalPoint());
+  private Mower anyMower() {
+    return new Mower(anyCoordinates(), anyFaceTo());
   }
 
-  @Test
-  void spinLeftFromSouth() {
-    var mower = mowerOrientedToSouth();
-    mower.spinLeft();
-    assertSame(mowerOrientedToEast().cardinalPoint(), mower.cardinalPoint());
+  private Mower anyMowerWithFaceToMocked() {
+    return new Mower(anyCoordinates(), faceToMocked);
   }
 
-  @Test
-  void spinLeftFromWest() {
-    var mower = mowerOrientedToWest();
-    mower.spinLeft();
-    assertSame(mowerOrientedToSouth().cardinalPoint(), mower.cardinalPoint());
+  private Mower anyMowerWithCoordinatesMocked() {
+    return new Mower(coordinatesMocked, anyFaceTo());
   }
 
-  @Test
-  void spinRightFromNorth() {
-    var mower = mowerOrientedToNorth();
-    mower.spinRight();
-    assertSame(mowerOrientedToEast().cardinalPoint(), mower.cardinalPoint());
-  }
-
-  @Test
-  void spinRightFromEast() {
-    var mower = mowerOrientedToEast();
-    mower.spinRight();
-    assertSame(mowerOrientedToSouth().cardinalPoint(), mower.cardinalPoint());
-  }
-
-  @Test
-  void spinRightFromSouth() {
-    var mower = mowerOrientedToSouth();
-    mower.spinRight();
-    assertSame(mowerOrientedToWest().cardinalPoint(), mower.cardinalPoint());
-  }
-
-  @Test
-  void spinRightFromWest() {
-    var mower = mowerOrientedToWest();
-    mower.spinRight();
-    assertSame(mowerOrientedToNorth().cardinalPoint(), mower.cardinalPoint());
-  }
-
-  @Test
-  void moveForwardFromNorth() {
-    var mower = mowerOrientedToNorth();
-    mower.moveForward();
-    assertEquals(mowerMovedToNorth().coordinates(), mower.coordinates());
-  }
-
-  @Test
-  void moveForwardFromEast() {
-    var mower = mowerOrientedToEast();
-    mower.moveForward();
-    assertEquals(mowerMovedToEast().coordinates(), mower.coordinates());
-  }
-
-  @Test
-  void moveForwardFromSouth() {
-    var mower = mowerOrientedToSouth();
-    mower.moveForward();
-    assertEquals(mowerMovedToSouth().coordinates(), mower.coordinates());
-  }
-
-  @Test
-  void moveForwardFromWest() {
-    var mower = mowerOrientedToWest();
-    mower.moveForward();
-    assertEquals(mowerMovedToWest().coordinates(), mower.coordinates());
-  }
-
-  private Mower mowerMovedToNorth() {
-    return new Mower(coordinatesMovedToNorth(), NORTH);
-  }
-
-  private Mower mowerMovedToEast() {
-    return new Mower(coordinatesMovedToEast(), EAST);
-  }
-
-  private Mower mowerMovedToSouth() {
-    return new Mower(coordinatesMovedToSouth(), SOUTH);
-  }
-
-  private Mower mowerMovedToWest() {
-    return new Mower(coordinatesMovedToWest(), WEST);
-  }
-
-  private Mower mowerOrientedToNorth() {
-    return new Mower(coordinates(), NORTH);
-  }
-
-  private Mower mowerOrientedToEast() {
-    return new Mower(coordinates(), EAST);
-  }
-
-  private Mower mowerOrientedToSouth() {
-    return new Mower(coordinates(), SOUTH);
-  }
-
-  private Mower mowerOrientedToWest() {
-    return new Mower(coordinates(), WEST);
-  }
-
-  private Coordinates coordinates() {
+  private Coordinates anyCoordinates() {
     return new Coordinates(COORDINATE_X, COORDINATE_Y);
   }
 
-  private Coordinates coordinatesMovedToNorth() {
-    return new Coordinates(COORDINATE_X, COORDINATE_Y + 1);
+  private FaceTo anyFaceTo() {
+    return new FaceTo(CARDINAL_POINT);
   }
-
-  private Coordinates coordinatesMovedToEast() {
-    return new Coordinates(COORDINATE_X + 1, COORDINATE_Y);
-  }
-
-  private Coordinates coordinatesMovedToSouth() {
-    return new Coordinates(COORDINATE_X, COORDINATE_Y - 1);
-  }
-
-  private Coordinates coordinatesMovedToWest() {
-    return new Coordinates(COORDINATE_X - 1, COORDINATE_Y);
-  }
-
 }

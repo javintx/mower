@@ -1,18 +1,26 @@
 package com.mower.domain;
 
 import com.mower.domain.exception.CoordinatesAreOutsidePlateau;
+import com.mower.domain.exception.PlateauSizeMustBePositiveNumbers;
+import com.mower.domain.valueobjects.Coordinates;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class PlateauShould {
 
+  private static final int ZERO_DIMENSION = 0;
   private static final int VALID_PLATEAU_WIDTH = 5;
   private static final int VALID_PLATEAU_HEIGHT = 5;
   private static final int OUTSIDE_COORDINATE_X = 6;
   private static final int OUTSIDE_COORDINATE_Y = 6;
   private static final int VALID_COORDINATE_X = 3;
   private static final int VALID_COORDINATE_Y = 3;
+
+  @Test
+  void throwPlateauSizeMustBePositiveNumbersIfCreatesAPlateauWithSizeZeroOrLess() {
+    assertThrows(PlateauSizeMustBePositiveNumbers.class, this::invalidPlateau);
+  }
 
   @Test
   void throwCoordinatesAreOutsidePlateauIfOutsizeCoordinates() {
@@ -32,6 +40,10 @@ public class PlateauShould {
   @Test
   void verifyCoordinates() {
     validPlateau().verifyCoordinates(validCoordinates());
+  }
+
+  private Plateau invalidPlateau() {
+    return new Plateau(ZERO_DIMENSION, ZERO_DIMENSION);
   }
 
   private Plateau validPlateau() {

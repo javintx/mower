@@ -21,22 +21,22 @@ public class CardinalPointShould {
 
   @Test
   void returnNorthFromNCode() {
-    assertSame(NORTH, CardinalPoint.fromCode(NORTH.code()));
+    assertSame(NORTH, CardinalPoint.fromCode("N"));
   }
 
   @Test
   void returnEastFromECode() {
-    assertSame(EAST, CardinalPoint.fromCode(EAST.code()));
+    assertSame(EAST, CardinalPoint.fromCode("E"));
   }
 
   @Test
   void returnSouthFromSCode() {
-    assertSame(SOUTH, CardinalPoint.fromCode(SOUTH.code()));
+    assertSame(SOUTH, CardinalPoint.fromCode("S"));
   }
 
   @Test
   void returnWestFromWCode() {
-    assertSame(WEST, CardinalPoint.fromCode(WEST.code()));
+    assertSame(WEST, CardinalPoint.fromCode("W"));
   }
 
 }

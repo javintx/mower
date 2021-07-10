@@ -1,6 +1,8 @@
 package com.mower.domain;
 
 import com.mower.domain.exception.UnknownCommandCode;
+import com.mower.domain.valueobjects.Coordinates;
+import com.mower.domain.valueobjects.FaceTo;
 import org.junit.jupiter.api.Test;
 
 import static com.mower.domain.CardinalPoint.NORTH;
@@ -53,14 +55,14 @@ public class CommandShould {
   }
 
   private Mower mower() {
-    return new Mower(coordinates(), cardinalPoint());
+    return new Mower(coordinates(), faceTo());
   }
 
   private Coordinates coordinates() {
     return new Coordinates(COORDINATE_X, COORDINATE_Y);
   }
 
-  private CardinalPoint cardinalPoint() {
-    return CARDINAL_POINT;
+  private FaceTo faceTo() {
+    return new FaceTo(CARDINAL_POINT);
   }
 }

@@ -24,11 +24,13 @@ And the mower could face to one of the cardinal points:
 
 ## Architecture
 
-Hexagonal architecture implemented with TDD in Java 11.
+- Hexagonal architecture implemented with TDD in Java 11.
+- JUnit5 with Mockito is used for unit tests.
+  + mock-maker-inline extension used for final classes.
 
 ### Core hexagon
 
-Hexagon with the domain and use cases logic of the mower application.
+Hexagon with the domain and use case logic of the mower application.
 
 # Requirements
 
@@ -68,12 +70,8 @@ Where "MODULE_NAME" could be each module of the mower application.
 # TO-DO
 
 - Refactor the "execute mower commands in plateau" use case
-    + Coordinates could be a value object
-    + May be could add another value object (like FaceTo) to encapsulate cardinal point
 - Add more business validations:
     + Coordinates occupied
-    + Coordinates must be positive values
-    + Plateau size must be positive
 - Add application hexagon
     + Command console application
 - Add e2e tests

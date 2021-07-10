@@ -1,6 +1,6 @@
 package com.mower.domain.exception;
 
-import com.mower.domain.Coordinates;
+import com.mower.domain.valueobjects.Coordinates;
 
 public class CoordinatesAreOutsidePlateau extends RuntimeException {
 
