@@ -1,5 +1,7 @@
 # mower application
 
+![workflow](https://github.com/javintx/mower/actions/workflows/gradle.yml/badge.svg)
+
 ## The mower challenge
 
 The mower only have 3 commands that controls the mower movements:
