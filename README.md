@@ -36,6 +36,10 @@ And the mower could face to one of the cardinal points:
 
 Hexagon with the domain and use case logic of the mower application.
 
+### App hexagon
+
+Hexagon with the application logic of the mower application.
+
 # Requirements
 
 - It is necessary to have Java 11 or above installed.
@@ -73,9 +77,7 @@ Where "MODULE_NAME" could be each module of the mower application.
 
 # TO-DO
 
-- Implement app hexagon
-    + Console application: Have a dependency with command console.
-    + Command console: Read user input print application help. May be could be moved to infrastructure layer?
+- Command console: Refactor print message method and add new for user interaction.
 - Create executable application jar.
 - Complete README.md
 - Add e2e tests

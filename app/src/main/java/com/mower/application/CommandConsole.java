@@ -72,8 +72,8 @@ public class CommandConsole {
     try {
       plateau.verifyCoordinates(processCoordinatesFrom(mowerDefinition));
       verified = true;
-    } catch (Exception e) {
-      System.err.println(e.getMessage());
+    } catch (Exception exception) {
+      printErrorMessage(exception.getMessage());
     }
     return verified;
   }
@@ -127,6 +127,10 @@ public class CommandConsole {
 
   public void printSituationOf(final Mower mower) {
     System.out.printf("Mower situation: %s%n", mower.situation());
+  }
+
+  public void printErrorMessage(String error) {
+    System.err.println(error);
   }
 
   private String parseArgument(String userExplanation, String validationRegex) {
