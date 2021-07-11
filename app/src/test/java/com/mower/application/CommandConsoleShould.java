@@ -2,6 +2,7 @@ package com.mower.application;
 
 import com.mower.domain.CardinalPoint;
 import com.mower.domain.Mower;
+import com.mower.domain.Plateau;
 import com.mower.domain.valueobjects.Coordinates;
 import com.mower.domain.valueobjects.FaceTo;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,6 +27,15 @@ public class CommandConsoleShould {
   private static final CardinalPoint ANY_CARDINAL_POINT = NORTH;
   private static final String VALID_INPUT_PLATEAU_DIMENSIONS = "5 5";
   private static final String INVALID_INPUT_PLATEAU_DIMENSIONS = "INVALID DIMENSIONS";
+  private static final int PLATEAU_WIDTH = 5;
+  private static final int PLATEAU_HEIGHT = 5;
+  private static final String INPUT_MOWER_DEFINITION_OUTSIDE_PLATEAU = "6 6 N";
+  private static final String INPUT_MOWER_DEFINITION_IN_OCCUPIED_COORDINATE = "3 3 N";
+  private static final String VALID_INPUT_MOWER_DEFINITION = "1 2 N";
+  private static final int VALID_MOWER_COORDINATE_X = 1;
+  private static final int VALID_MOWER_COORDINATE_Y = 2;
+  private static final int OCCUPIED_COORDINATE_X = 3;
+  private static final int OCCUPIED_COORDINATE_Y = 3;
 
   @Mock
   Scanner scannerMocked;
@@ -38,12 +48,6 @@ public class CommandConsoleShould {
 
   @Test
   void readPlateau() {
-    when(scannerMocked.nextLine()).thenReturn(VALID_INPUT_PLATEAU_DIMENSIONS);
-    assertThat(commandConsole.readPlateau()).isNotNull();
-  }
-
-  @Test
-  void readPlateauWithErrorFirst() {
     when(scannerMocked.nextLine()).thenReturn(INVALID_INPUT_PLATEAU_DIMENSIONS, VALID_INPUT_PLATEAU_DIMENSIONS);
     assertThat(commandConsole.readPlateau()).isNotNull();
     verify(scannerMocked, new Times(2)).nextLine();
@@ -51,7 +55,12 @@ public class CommandConsoleShould {
 
   @Test
   void readMower() {
-    assertThat(commandConsole.readMower()).isNotNull();
+    when(scannerMocked.nextLine())
+        .thenReturn(INPUT_MOWER_DEFINITION_OUTSIDE_PLATEAU)
+        .thenReturn(INPUT_MOWER_DEFINITION_IN_OCCUPIED_COORDINATE)
+        .thenReturn(VALID_INPUT_MOWER_DEFINITION);
+    assertThat(commandConsole.readMowerGiven(plateauWithOccupiedCoordinates()).coordinates()).isEqualTo(validMowerCoordinates());
+    verify(scannerMocked, new Times(3)).nextLine();
   }
 
   @Test
@@ -79,6 +88,20 @@ public class CommandConsoleShould {
 
   private FaceTo anyFaceTo() {
     return new FaceTo(ANY_CARDINAL_POINT);
+  }
+
+  private Plateau plateauWithOccupiedCoordinates() {
+    var plateau = new Plateau(PLATEAU_WIDTH, PLATEAU_HEIGHT);
+    plateau.occupyCoordinate(occupiedCoordinates());
+    return plateau;
+  }
+
+  private Coordinates occupiedCoordinates() {
+    return new Coordinates(OCCUPIED_COORDINATE_X, OCCUPIED_COORDINATE_Y);
+  }
+
+  private Coordinates validMowerCoordinates() {
+    return new Coordinates(VALID_MOWER_COORDINATE_X, VALID_MOWER_COORDINATE_Y);
   }
 
 }
