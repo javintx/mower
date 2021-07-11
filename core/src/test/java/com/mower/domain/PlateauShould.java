@@ -19,8 +19,13 @@ public class PlateauShould {
   private static final int VALID_COORDINATE_Y = 3;
 
   @Test
-  void throwPlateauSizeMustBePositiveNumbersIfCreatesAPlateauWithSizeZeroOrLess() {
-    assertThrows(PlateauSizeMustBePositiveNumbers.class, this::invalidPlateau);
+  void throwPlateauSizeMustBePositiveNumbersIfCreatesAPlateauWithWidthZeroOrLess() {
+    assertThrows(PlateauSizeMustBePositiveNumbers.class, () -> new Plateau(ZERO_DIMENSION, VALID_PLATEAU_HEIGHT));
+  }
+
+  @Test
+  void throwPlateauSizeMustBePositiveNumbersIfCreatesAPlateauWithHighZeroOrLess() {
+    assertThrows(PlateauSizeMustBePositiveNumbers.class, () -> new Plateau(VALID_PLATEAU_WIDTH, ZERO_DIMENSION));
   }
 
   @Test
@@ -46,10 +51,6 @@ public class PlateauShould {
   @Test
   void verifyCoordinates() {
     validPlateau().verifyCoordinates(validCoordinates());
-  }
-
-  private Plateau invalidPlateau() {
-    return new Plateau(ZERO_DIMENSION, ZERO_DIMENSION);
   }
 
   private Plateau validPlateau() {

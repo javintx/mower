@@ -22,22 +22,24 @@ public class Plateau {
     this.usedCoordinates = new ArrayList<>();
   }
 
+  public void verifyCoordinates(final Coordinates coordinates) {
+    verifyAreInside(coordinates);
+    verifyAreUnoccupied(coordinates);
+  }
+
+  public void occupyCoordinate(final Coordinates coordinates) {
+    this.usedCoordinates.add(coordinates);
+  }
+
   private void verifyPlateauSize(int width, int height) {
     if (width <= MINIMUM_PLATEAU_COORDINATE || height <= MINIMUM_PLATEAU_COORDINATE) {
       throw new PlateauSizeMustBePositiveNumbers(width, height);
     }
   }
 
-  public void verifyCoordinates(final Coordinates coordinates) {
-    verifyAreInside(coordinates);
-    verifyAreUnoccupied(coordinates);
-  }
-
   private void verifyAreInside(final Coordinates coordinates) {
     if (coordinates.coordinateX() > width
-        || coordinates.coordinateY() > height
-        || coordinates.coordinateX() < MINIMUM_PLATEAU_COORDINATE
-        || coordinates.coordinateY() < MINIMUM_PLATEAU_COORDINATE) {
+        || coordinates.coordinateY() > height) {
       throw new CoordinatesAreOutsidePlateau(coordinates);
     }
   }
@@ -46,10 +48,6 @@ public class Plateau {
     if (this.usedCoordinates.contains(coordinates)) {
       throw new CoordinatesAreOccupied(coordinates);
     }
-  }
-
-  public void occupyCoordinate(final Coordinates coordinates) {
-    this.usedCoordinates.add(coordinates);
   }
 
 }

@@ -21,9 +21,15 @@ public class CoordinateShould {
   private static final int LESS_THAN_ZERO_DIMENSION = -1;
 
   @Test
-  void throwCoordinatesMustBePositiveNumbersIfCreatesACoordinatesWithDimensionsZeroOrLess() {
+  void throwCoordinatesMustBePositiveNumbersIfCreatesACoordinatesWithCoordinateXZeroOrLess() {
     assertThrows(CoordinatesMustBePositiveNumbers.class,
-        () -> new Coordinates(LESS_THAN_ZERO_DIMENSION, LESS_THAN_ZERO_DIMENSION));
+        () -> new Coordinates(LESS_THAN_ZERO_DIMENSION, COORDINATE_Y));
+  }
+
+  @Test
+  void throwCoordinatesMustBePositiveNumbersIfCreatesACoordinatesWithCoordinateYZeroOrLess() {
+    assertThrows(CoordinatesMustBePositiveNumbers.class,
+        () -> new Coordinates(COORDINATE_X, LESS_THAN_ZERO_DIMENSION));
   }
 
   @Test

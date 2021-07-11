@@ -4,9 +4,9 @@ import com.mower.domain.valueobjects.Coordinates;
 
 public class CoordinatesAreOutsidePlateau extends RuntimeException {
 
-  private static final String CAUSE = "The coordinates %s are outside the plateau";
+  private static final String CAUSE = "The coordinates (%d, %d) are outside the plateau";
 
   public CoordinatesAreOutsidePlateau(final Coordinates coordinates) {
-    super(String.format(CAUSE, coordinates));
+    super(String.format(CAUSE, coordinates.coordinateX(), coordinates.coordinateY()));
   }
 }

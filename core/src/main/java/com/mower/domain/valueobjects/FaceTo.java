@@ -3,7 +3,7 @@ package com.mower.domain.valueobjects;
 import com.mower.domain.CardinalPoint;
 
 public class FaceTo {
-  public static final int FIRST_CARDINAL_POINT_INDEX = 0;
+  private static final int FIRST_CARDINAL_POINT_INDEX = 0;
   private CardinalPoint cardinalPointOrientation;
 
   public FaceTo(CardinalPoint initialOrientation) {
@@ -16,6 +16,10 @@ public class FaceTo {
 
   public void spinRight() {
     this.cardinalPointOrientation = rightCardinalPoint();
+  }
+
+  public void spinLeft() {
+    this.cardinalPointOrientation = leftCardinalPoint();
   }
 
   private CardinalPoint rightCardinalPoint() {
@@ -32,10 +36,6 @@ public class FaceTo {
 
   private CardinalPoint getFirstCardinalPoint() {
     return CardinalPoint.values()[FIRST_CARDINAL_POINT_INDEX];
-  }
-
-  public void spinLeft() {
-    this.cardinalPointOrientation = leftCardinalPoint();
   }
 
   private CardinalPoint leftCardinalPoint() {

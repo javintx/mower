@@ -47,6 +47,36 @@ public class CommandConsole {
     return processPlateauWith(plateauSize);
   }
 
+  public Mower readMowerGiven(final Plateau plateau) {
+    String mowerDefinition;
+    do {
+      mowerDefinition = parseArgument(USER_EXPLANATION_FOR_MOWER_DEFINITION, MOWER_REGEX);
+    } while (!verifyMower(plateau, mowerDefinition));
+    return processMowerWith(mowerDefinition);
+  }
+
+  public List<Command> readMowerCommands() {
+    var mowerCommands = parseArgument(USER_EXPLANATION_FOR_MOWER_COMMANDS, MOWER_COMMANDS_REGEX);
+    return processCommandsWith(mowerCommands);
+  }
+
+  public boolean readIsFinished() {
+    var isFinished = parseArgument(USER_EXPLANATION_FOR_IS_FINISHED, IS_FINISHED_REGEX);
+    return processIsFinishedWith(isFinished);
+  }
+
+  public void printSituationOf(final Mower mower) {
+    printMessage(String.format("Mower situation: %s%n", mower.situation()));
+  }
+
+  public void printErrorMessage(String error) {
+    System.err.println(error);
+  }
+
+  public void printMessage(String message) {
+    System.out.println(message);
+  }
+
   private Plateau processPlateauWith(String size) {
     return new Plateau(plateauWidthFrom(size), plateauHeightFrom(size));
   }
@@ -57,14 +87,6 @@ public class CommandConsole {
 
   private int plateauHeightFrom(String size) {
     return Integer.parseInt(size.split(PLATEAU_SEPARATOR_REGEX)[PLATEAU_HEIGHT_INDEX]);
-  }
-
-  public Mower readMowerGiven(final Plateau plateau) {
-    String mowerDefinition;
-    do {
-      mowerDefinition = parseArgument(USER_EXPLANATION_FOR_MOWER_DEFINITION, MOWER_REGEX);
-    } while (!verifyMower(plateau, mowerDefinition));
-    return processMowerWith(mowerDefinition);
   }
 
   private boolean verifyMower(final Plateau plateau, String mowerDefinition) {
@@ -104,11 +126,6 @@ public class CommandConsole {
     return new FaceTo(CardinalPoint.fromCode(mowerDefinition.split(MOWER_SEPARATOR_REGEX)[MOWER_CARDINAL_POINT_INDEX]));
   }
 
-  public List<Command> readMowerCommands() {
-    var mowerCommands = parseArgument(USER_EXPLANATION_FOR_MOWER_COMMANDS, MOWER_COMMANDS_REGEX);
-    return processCommandsWith(mowerCommands);
-  }
-
   private List<Command> processCommandsWith(String mowerCommands) {
     return Arrays
         .stream(mowerCommands.split(COMMANDS_SEPARATOR_REGEX))
@@ -116,21 +133,8 @@ public class CommandConsole {
         .collect(Collectors.toList());
   }
 
-  public boolean readIsFinished() {
-    var isFinished = parseArgument(USER_EXPLANATION_FOR_IS_FINISHED, IS_FINISHED_REGEX);
-    return processIsFinishedWith(isFinished);
-  }
-
   private boolean processIsFinishedWith(String isFinished) {
     return FINISH_VALUE.equalsIgnoreCase(isFinished);
-  }
-
-  public void printSituationOf(final Mower mower) {
-    System.out.printf("Mower situation: %s%n", mower.situation());
-  }
-
-  public void printErrorMessage(String error) {
-    System.err.println(error);
   }
 
   private String parseArgument(String userExplanation, String validationRegex) {
@@ -142,7 +146,7 @@ public class CommandConsole {
   }
 
   private String askForArgumentWith(String userExplanation) {
-    System.out.print(userExplanation);
+    printMessage(userExplanation);
     return scanner.nextLine();
   }
 

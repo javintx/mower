@@ -47,7 +47,8 @@ public class CommandConsoleShould {
   private static final String VALID_INPUT_IS_FINISHED = "y";
   private static final String VALID_INPUT_IS_NOT_FINISHED = "N";
   private static final String INVALID_INPUT_IS_FINISHED = "INVALID";
-  public static final String ANY_ERROR_MESSAGE = "ANY ERROR MESSAGE";
+  private static final String ANY_ERROR_MESSAGE = "ANY ERROR MESSAGE";
+  private static final String ANY_MESSAGE = "ANY MESSAGE";
 
   @Mock
   Scanner scannerMocked;
@@ -99,6 +100,11 @@ public class CommandConsoleShould {
   @Test
   void printSituationOfMower() {
     commandConsole.printSituationOf(anyMower());
+  }
+
+  @Test
+  void printMessageToUser() {
+    commandConsole.printMessage(ANY_MESSAGE);
   }
 
   @Test

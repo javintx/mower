@@ -22,6 +22,7 @@ And the mower could face to one of the cardinal points:
 
 ## Assumptions
 
+- The coordinates are always positive numbers.
 - The mower executes the command and then verify if it has any problem.
     + When mower move outside the plateau, the mower stops and does not occupy any coordinate in the plateau.
     + When mower crashed with any previous mower, the mower stops and occupy the same coordinate as crashed mower.
@@ -103,8 +104,6 @@ Where "MODULE_NAME" could be each module of the mower application.
 # TO-DO
 
 - MowerApp: Find another way to inject for test purposes.
-- Command console: Refactor print message method and add new for user interaction.
-- Improve exception messages to user. It could be difficult to read.
 - Add e2e tests
 - Plateau could have 2 coordinates to define the size
     + The verifyAreInside method in the plateau could be moved to Coordinates class.

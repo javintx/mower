@@ -20,6 +20,7 @@ public class Coordinates {
       SOUTH, Coordinates::downward,
       WEST, Coordinates::backward
   );
+  private static final int MINIMUM_COORDINATE_VALUE = 0;
   private final AtomicInteger coordinateX;
   private final AtomicInteger coordinateY;
 
@@ -29,30 +30,8 @@ public class Coordinates {
     this.coordinateY = new AtomicInteger(initialCoordinateY);
   }
 
-  private void validatePositiveCoordinates(int initialCoordinateX, int initialCoordinateY) {
-    if (initialCoordinateX < 0 || initialCoordinateY < 0) {
-      throw new CoordinatesMustBePositiveNumbers(initialCoordinateX, initialCoordinateY);
-    }
-  }
-
   public void moveTowards(CardinalPoint cardinalPoint) {
     MOVEMENTS.get(cardinalPoint).accept(this);
-  }
-
-  private void forward() {
-    coordinateX.incrementAndGet();
-  }
-
-  private void backward() {
-    coordinateX.decrementAndGet();
-  }
-
-  private void upward() {
-    coordinateY.incrementAndGet();
-  }
-
-  private void downward() {
-    coordinateY.decrementAndGet();
   }
 
   public int coordinateX() {
@@ -75,4 +54,27 @@ public class Coordinates {
   public int hashCode() {
     return Objects.hash(coordinateX.get(), coordinateY.get());
   }
+
+  private void validatePositiveCoordinates(int initialCoordinateX, int initialCoordinateY) {
+    if (initialCoordinateX < MINIMUM_COORDINATE_VALUE || initialCoordinateY < MINIMUM_COORDINATE_VALUE) {
+      throw new CoordinatesMustBePositiveNumbers(initialCoordinateX, initialCoordinateY);
+    }
+  }
+
+  private void forward() {
+    coordinateX.incrementAndGet();
+  }
+
+  private void backward() {
+    coordinateX.decrementAndGet();
+  }
+
+  private void upward() {
+    coordinateY.incrementAndGet();
+  }
+
+  private void downward() {
+    coordinateY.decrementAndGet();
+  }
+
 }
