@@ -1,6 +1,7 @@
 package com.mower.application;
 
 import com.mower.domain.CardinalPoint;
+import com.mower.domain.Command;
 import com.mower.domain.Mower;
 import com.mower.domain.Plateau;
 import com.mower.domain.valueobjects.Coordinates;
@@ -12,9 +13,13 @@ import org.mockito.Mock;
 import org.mockito.internal.verification.Times;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.List;
 import java.util.Scanner;
 
 import static com.mower.domain.CardinalPoint.NORTH;
+import static com.mower.domain.Command.LEFT;
+import static com.mower.domain.Command.MOVE;
+import static com.mower.domain.Command.RIGHT;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -36,6 +41,10 @@ public class CommandConsoleShould {
   private static final int VALID_MOWER_COORDINATE_Y = 2;
   private static final int OCCUPIED_COORDINATE_X = 3;
   private static final int OCCUPIED_COORDINATE_Y = 3;
+  private static final String INVALID_INPUT_MOWER_COMMANDS = "INVALID MOWER COMMANDS";
+  private static final String VALID_INPUT_MOWER_COMMANDS = "LRM";
+  private static final List<Command> EXPECTED_MOWER_COMMANDS = List.of(LEFT, RIGHT, MOVE);
+
 
   @Mock
   Scanner scannerMocked;
@@ -65,7 +74,9 @@ public class CommandConsoleShould {
 
   @Test
   void readMowerCommands() {
-    assertThat(commandConsole.readMowerCommands()).isNotNull();
+    when(scannerMocked.nextLine()).thenReturn(INVALID_INPUT_MOWER_COMMANDS, VALID_INPUT_MOWER_COMMANDS);
+    assertThat(commandConsole.readMowerCommands()).isEqualTo(expectedMowerCommands());
+    verify(scannerMocked, new Times(2)).nextLine();
   }
 
   @Test
@@ -102,6 +113,10 @@ public class CommandConsoleShould {
 
   private Coordinates validMowerCoordinates() {
     return new Coordinates(VALID_MOWER_COORDINATE_X, VALID_MOWER_COORDINATE_Y);
+  }
+
+  private List<Command> expectedMowerCommands() {
+    return EXPECTED_MOWER_COMMANDS;
   }
 
 }

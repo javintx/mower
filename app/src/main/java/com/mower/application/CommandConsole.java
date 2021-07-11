@@ -7,24 +7,25 @@ import com.mower.domain.Plateau;
 import com.mower.domain.valueobjects.Coordinates;
 import com.mower.domain.valueobjects.FaceTo;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-
-import static com.mower.domain.Command.LEFT;
-import static com.mower.domain.Command.MOVE;
-import static com.mower.domain.Command.RIGHT;
+import java.util.stream.Collectors;
 
 
 public class CommandConsole {
 
   private static final String USER_EXPLANATION_FOR_PLATEAU_COORDINATES = "Insert the upper right coordinates of the plateau (like: 5 5): ";
   private static final String USER_EXPLANATION_FOR_MOWER_DEFINITION = "Insert the mower definition (like: 1 2 N): ";
+  private static final String USER_EXPLANATION_FOR_MOWER_COMMANDS = "Insert the mower commands (like: LRM): ";
 
   private static final String PLATEAU_SEPARATOR_REGEX = " ";
   private static final String MOWER_SEPARATOR_REGEX = " ";
+  private static final String COMMANDS_SEPARATOR_REGEX = "";
   private static final String NUMBER_REGEX = "[0-9]+";
   private static final String PLATEAU_REGEX = NUMBER_REGEX + PLATEAU_SEPARATOR_REGEX + NUMBER_REGEX;
   private static final String MOWER_REGEX = NUMBER_REGEX + MOWER_SEPARATOR_REGEX + NUMBER_REGEX + MOWER_SEPARATOR_REGEX + "[NESW]";
+  private static final String MOWER_COMMANDS_REGEX = "[LRM]+";
 
   private static final int PLATEAU_WIDTH_INDEX = 0;
   private static final int PLATEAU_HEIGHT_INDEX = 1;
@@ -101,7 +102,15 @@ public class CommandConsole {
   }
 
   public List<Command> readMowerCommands() {
-    return List.of(LEFT, RIGHT, MOVE);
+    var mowerCommands = parseArgument(USER_EXPLANATION_FOR_MOWER_COMMANDS, MOWER_COMMANDS_REGEX);
+    return processCommandsWith(mowerCommands);
+  }
+
+  private List<Command> processCommandsWith(String mowerCommands) {
+    return Arrays
+        .stream(mowerCommands.split(COMMANDS_SEPARATOR_REGEX))
+        .map(Command::fromCode)
+        .collect(Collectors.toList());
   }
 
   public boolean readIsFinished() {
