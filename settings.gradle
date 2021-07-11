@@ -1,3 +1,4 @@
+rootProject.name = 'mower'
 include 'core'
 include 'app'
 
