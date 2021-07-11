@@ -81,7 +81,11 @@ public class ConsoleApplicationShould {
   }
 
   private Plateau anyPlateau() {
-    return new Plateau(ANY_WIDTH, ANY_HEIGHT);
+    return new Plateau(anyPlateauCoordinates());
+  }
+
+  private Coordinates anyPlateauCoordinates() {
+    return new Coordinates(ANY_WIDTH, ANY_HEIGHT);
   }
 
   private Mower anyMower() {

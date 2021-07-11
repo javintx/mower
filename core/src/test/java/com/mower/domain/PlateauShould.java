@@ -1,8 +1,7 @@
 package com.mower.domain;
 
 import com.mower.domain.exception.CoordinatesAreOccupied;
-import com.mower.domain.exception.CoordinatesAreOutsidePlateau;
-import com.mower.domain.exception.PlateauSizeMustBePositiveNumbers;
+import com.mower.domain.exception.CoordinatesAreOutside;
 import com.mower.domain.valueobjects.Coordinates;
 import org.junit.jupiter.api.Test;
 
@@ -19,28 +18,18 @@ public class PlateauShould {
   private static final int VALID_COORDINATE_Y = 3;
 
   @Test
-  void throwPlateauSizeMustBePositiveNumbersIfCreatesAPlateauWithWidthZeroOrLess() {
-    assertThrows(PlateauSizeMustBePositiveNumbers.class, () -> new Plateau(ZERO_DIMENSION, VALID_PLATEAU_HEIGHT));
-  }
-
-  @Test
-  void throwPlateauSizeMustBePositiveNumbersIfCreatesAPlateauWithHighZeroOrLess() {
-    assertThrows(PlateauSizeMustBePositiveNumbers.class, () -> new Plateau(VALID_PLATEAU_WIDTH, ZERO_DIMENSION));
-  }
-
-  @Test
   void throwCoordinatesAreOutsidePlateauIfOutsizeCoordinates() {
-    assertThrows(CoordinatesAreOutsidePlateau.class, () -> validPlateau().verifyCoordinates(outsideCoordinates()));
+    assertThrows(CoordinatesAreOutside.class, () -> validPlateau().verifyCoordinates(outsideCoordinates()));
   }
 
   @Test
   void throwCoordinatesAreOutsidePlateauIfOutsizeCoordinatesByCoordinateX() {
-    assertThrows(CoordinatesAreOutsidePlateau.class, () -> validPlateau().verifyCoordinates(outsideCoordinatesByCoordinateX()));
+    assertThrows(CoordinatesAreOutside.class, () -> validPlateau().verifyCoordinates(outsideCoordinatesByCoordinateX()));
   }
 
   @Test
   void throwCoordinatesAreOutsidePlateauIfOutsizeCoordinatesByCoordinateY() {
-    assertThrows(CoordinatesAreOutsidePlateau.class, () -> validPlateau().verifyCoordinates(outsideCoordinatesByCoordinateY()));
+    assertThrows(CoordinatesAreOutside.class, () -> validPlateau().verifyCoordinates(outsideCoordinatesByCoordinateY()));
   }
 
   @Test
@@ -54,13 +43,25 @@ public class PlateauShould {
   }
 
   private Plateau validPlateau() {
-    return new Plateau(VALID_PLATEAU_WIDTH, VALID_PLATEAU_HEIGHT);
+    return new Plateau(validPlateauCoordinates());
   }
 
   private Plateau validPlateauWithOccupiedCoordinate() {
-    var plateau = new Plateau(VALID_PLATEAU_WIDTH, VALID_PLATEAU_HEIGHT);
+    var plateau = new Plateau(validPlateauCoordinates());
     plateau.occupyCoordinate(validCoordinates());
     return plateau;
+  }
+
+  private Coordinates validPlateauCoordinates() {
+    return new Coordinates(VALID_PLATEAU_WIDTH, VALID_PLATEAU_HEIGHT);
+  }
+
+  private Coordinates plateauCoordinatesWithWrongWidthCoordinate() {
+    return new Coordinates(ZERO_DIMENSION, VALID_PLATEAU_HEIGHT);
+  }
+
+  private Coordinates plateauCoordinatesWithWrongHeightCoordinate() {
+    return new Coordinates(VALID_PLATEAU_WIDTH, ZERO_DIMENSION);
   }
 
   private Coordinates outsideCoordinates() {

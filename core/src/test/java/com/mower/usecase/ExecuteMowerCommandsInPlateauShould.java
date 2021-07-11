@@ -4,7 +4,7 @@ import com.mower.domain.Command;
 import com.mower.domain.Mower;
 import com.mower.domain.Plateau;
 import com.mower.domain.exception.CoordinatesAreOccupied;
-import com.mower.domain.exception.CoordinatesAreOutsidePlateau;
+import com.mower.domain.exception.CoordinatesAreOutside;
 import com.mower.domain.valueobjects.Coordinates;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -61,8 +61,8 @@ public class ExecuteMowerCommandsInPlateauShould {
   @Test
   void executeWithThrowCoordinatesAreOutsidePlateau() {
     when(mowerMocked.coordinates()).thenReturn(coordinatesMocked);
-    doThrow(CoordinatesAreOutsidePlateau.class).when(plateauMocked).verifyCoordinates(any(Coordinates.class));
-    assertThrows(CoordinatesAreOutsidePlateau.class, () -> this.executeMowerCommandsInPlateau.executeWith(plateauMocked, mowerMocked, commands()));
+    doThrow(CoordinatesAreOutside.class).when(plateauMocked).verifyCoordinates(any(Coordinates.class));
+    assertThrows(CoordinatesAreOutside.class, () -> this.executeMowerCommandsInPlateau.executeWith(plateauMocked, mowerMocked, commands()));
     verify(mowerMocked, new Times(1)).executeCommand(any(Command.class));
     verify(mowerMocked, new Times(1)).coordinates();
     verify(plateauMocked, new Times(0)).occupyCoordinate(any(Coordinates.class));

@@ -15,7 +15,7 @@ public enum CardinalPoint {
 
   public static CardinalPoint fromCode(String cardinalPointCode) {
     return Arrays.stream(values())
-        .filter(cardinalPoint -> cardinalPoint.code.equals(cardinalPointCode.toUpperCase()))
+        .filter(cardinalPoint -> cardinalPoint.code.equalsIgnoreCase(cardinalPointCode))
         .findAny()
         .orElseThrow(() -> new UnknownCardinalPointCode(cardinalPointCode));
   }

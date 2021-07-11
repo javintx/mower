@@ -66,6 +66,12 @@ In the `rootDirectory` execute:
 
 > gradlew clean test
 
+## Obtain JaCoCo report
+
+In the `rootDirectory` execute:
+
+> gradlew clean test jacocoTestReport
+
 ## Execute the application
 
 In the `rootDirectory/build/libs` execute:
@@ -95,7 +101,26 @@ After the commands inserted, the mower executes them and prints their final posi
 
 ## Find the test reports
 
+After build the project:
+
 > {MODULE_NAME}/build/report/tests/test/index.html
+
+Where "MODULE_NAME" could be each module of the mower application.
+
+## Find the build reports
+
+After build the project, you can find the html files that contains the build reports.
+
+> {MODULE_NAME}/build/report/checkstyle/main.html
+> {MODULE_NAME}/build/report/checkstyle/test.html
+>
+> {MODULE_NAME}/build/report/pmd/main.html
+> {MODULE_NAME}/build/report/pmd/test.html
+>
+> {MODULE_NAME}/build/report/spotbugs/main.html
+> {MODULE_NAME}/build/report/spotbugs/test.html
+>
+> {MODULE_NAME}/build/report/jacoco/test/index.html
 
 Where "MODULE_NAME" could be each module of the mower application.
 
@@ -105,7 +130,3 @@ Where "MODULE_NAME" could be each module of the mower application.
 
 - MowerApp: Find another way to inject for test purposes.
 - Add e2e tests
-- Plateau could have 2 coordinates to define the size
-    + The verifyAreInside method in the plateau could be moved to Coordinates class.
-- Coordinates could have their own situation method and with the previous improvement, the coordinateX and coordinateY
-  methods in Coordinates class could be deleted.

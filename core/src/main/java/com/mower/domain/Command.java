@@ -20,7 +20,7 @@ public enum Command {
 
   public static Command fromCode(String commandCode) {
     return Arrays.stream(values())
-        .filter(command -> command.code.equals(commandCode.toUpperCase()))
+        .filter(command -> command.code.equalsIgnoreCase(commandCode))
         .findAny()
         .orElseThrow(() -> new UnknownCommandCode(commandCode));
   }

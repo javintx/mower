@@ -85,6 +85,26 @@ public class FaceToShould {
     assertThat(faceToWest.orientation()).isEqualTo(faceToSouth().orientation());
   }
 
+  @Test
+  void printFaceToNorthSituation() {
+    assertThat(faceToNorth().situation()).isEqualTo(NORTH.code());
+  }
+
+  @Test
+  void printFaceToEastSituation() {
+    assertThat(faceToEast().situation()).isEqualTo(EAST.code());
+  }
+
+  @Test
+  void printFaceToSouthSituation() {
+    assertThat(faceToSouth().situation()).isEqualTo(SOUTH.code());
+  }
+
+  @Test
+  void printFaceToWestSituation() {
+    assertThat(faceToWest().situation()).isEqualTo(WEST.code());
+  }
+
   private FaceTo faceToNorth() {
     return new FaceTo(NORTH);
   }

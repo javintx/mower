@@ -22,6 +22,10 @@ public class FaceTo {
     this.cardinalPointOrientation = leftCardinalPoint();
   }
 
+  public String situation() {
+    return cardinalPointOrientation.code();
+  }
+
   private CardinalPoint rightCardinalPoint() {
     if (isTheLastCardinalPoint()) {
       return getFirstCardinalPoint();

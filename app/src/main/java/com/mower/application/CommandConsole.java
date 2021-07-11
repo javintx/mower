@@ -12,7 +12,6 @@ import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-
 public class CommandConsole {
 
   private static final String USER_EXPLANATION_FOR_PLATEAU_COORDINATES = "Insert the upper right coordinates of the plateau (like: 5 5): ";
@@ -29,8 +28,6 @@ public class CommandConsole {
   private static final String MOWER_COMMANDS_REGEX = "[LRM]+";
   private static final String IS_FINISHED_REGEX = "[ynYN]";
 
-  private static final int PLATEAU_WIDTH_INDEX = 0;
-  private static final int PLATEAU_HEIGHT_INDEX = 1;
   private static final int MOWER_COORDINATE_X_INDEX = 0;
   private static final int MOWER_COORDINATE_Y_INDEX = 1;
   private static final int MOWER_CARDINAL_POINT_INDEX = 2;
@@ -78,32 +75,23 @@ public class CommandConsole {
   }
 
   private Plateau processPlateauWith(String size) {
-    return new Plateau(plateauWidthFrom(size), plateauHeightFrom(size));
-  }
-
-  private int plateauWidthFrom(String size) {
-    return Integer.parseInt(size.split(PLATEAU_SEPARATOR_REGEX)[PLATEAU_WIDTH_INDEX]);
-  }
-
-  private int plateauHeightFrom(String size) {
-    return Integer.parseInt(size.split(PLATEAU_SEPARATOR_REGEX)[PLATEAU_HEIGHT_INDEX]);
+    return new Plateau(processCoordinatesFrom(size));
   }
 
   private boolean verifyMower(final Plateau plateau, String mowerDefinition) {
-    var verified = false;
     try {
       plateau.verifyCoordinates(processCoordinatesFrom(mowerDefinition));
-      verified = true;
+      return true;
     } catch (Exception exception) {
       printErrorMessage(exception.getMessage());
     }
-    return verified;
+    return false;
   }
 
-  private Coordinates processCoordinatesFrom(String mowerDefinition) {
+  private Coordinates processCoordinatesFrom(String coordinateDefinition) {
     return new Coordinates(
-        coordinateXFrom(mowerDefinition),
-        coordinateYFrom(mowerDefinition));
+        coordinateXFrom(coordinateDefinition),
+        coordinateYFrom(coordinateDefinition));
   }
 
   private int coordinateXFrom(String mowerDefinition) {

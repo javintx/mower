@@ -3,7 +3,7 @@ package com.mower.application;
 import com.mower.domain.Mower;
 import com.mower.domain.Plateau;
 import com.mower.domain.exception.CoordinatesAreOccupied;
-import com.mower.domain.exception.CoordinatesAreOutsidePlateau;
+import com.mower.domain.exception.CoordinatesAreOutside;
 import com.mower.usecase.ExecuteMowerCommandsInPlateau;
 
 public class ConsoleApplication {
@@ -33,8 +33,8 @@ public class ConsoleApplication {
     try {
       executeMowerCommandsInPlateau.executeWith(plateau, mower, mowerCommands);
       commandConsole.printSituationOf(mower);
-    } catch (CoordinatesAreOutsidePlateau coordinatesAreOutsidePlateau) {
-      mowerHasComeOffThePlateau(commandConsole, coordinatesAreOutsidePlateau);
+    } catch (CoordinatesAreOutside coordinatesAreOutside) {
+      mowerHasComeOffThePlateau(commandConsole, coordinatesAreOutside);
     } catch (CoordinatesAreOccupied coordinatesAreOccupied) {
       mowerHasCrashedWithAnotherMower(commandConsole, mower, coordinatesAreOccupied);
     }
@@ -45,7 +45,7 @@ public class ConsoleApplication {
     commandConsole.printSituationOf(mower);
   }
 
-  private void mowerHasComeOffThePlateau(final CommandConsole commandConsole, final CoordinatesAreOutsidePlateau coordinatesAreOutsidePlateau) {
-    commandConsole.printErrorMessage(coordinatesAreOutsidePlateau.getMessage());
+  private void mowerHasComeOffThePlateau(final CommandConsole commandConsole, final CoordinatesAreOutside coordinatesAreOutside) {
+    commandConsole.printErrorMessage(coordinatesAreOutside.getMessage());
   }
 }

@@ -17,11 +17,10 @@ import static org.mockito.Mockito.verify;
 @ExtendWith(MockitoExtension.class)
 public class MowerShould {
 
+  public static final String EXPECTED_MOWER_SITUATION = "1 2 N";
   private static final int COORDINATE_X = 1;
   private static final int COORDINATE_Y = 2;
   private static final CardinalPoint CARDINAL_POINT = NORTH;
-  public static final String EXPECTED_MOWER_SITUATION = "1 2 N";
-
   @Mock
   Command commandMocked;
   @Mock

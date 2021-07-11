@@ -1,6 +1,7 @@
 package com.mower.domain.valueobjects;
 
 import com.mower.domain.CardinalPoint;
+import com.mower.domain.exception.CoordinatesAreOutside;
 import com.mower.domain.exception.CoordinatesMustBePositiveNumbers;
 
 import java.util.Map;
@@ -34,12 +35,17 @@ public class Coordinates {
     MOVEMENTS.get(cardinalPoint).accept(this);
   }
 
-  public int coordinateX() {
-    return coordinateX.get();
+  public void verifyAreInside(final Coordinates bottomLeftCoordinates, final Coordinates upperRightCoordinates) {
+    if (bottomLeftCoordinates.coordinateX.get() > this.coordinateX.get()
+        || bottomLeftCoordinates.coordinateY.get() > this.coordinateY.get()
+        || upperRightCoordinates.coordinateX.get() < this.coordinateX.get()
+        || upperRightCoordinates.coordinateY.get() < this.coordinateY.get()) {
+      throw new CoordinatesAreOutside(this.coordinateX.get(), this.coordinateY.get());
+    }
   }
 
-  public int coordinateY() {
-    return coordinateY.get();
+  public String situation() {
+    return coordinateX.get() + " " + coordinateY.get();
   }
 
   @Override

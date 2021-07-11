@@ -103,7 +103,7 @@ public class CommandConsoleShould {
   }
 
   @Test
-  void printMessageToUser() {
+  void printMessage() {
     commandConsole.printMessage(ANY_MESSAGE);
   }
 
@@ -125,9 +125,13 @@ public class CommandConsoleShould {
   }
 
   private Plateau plateauWithOccupiedCoordinates() {
-    var plateau = new Plateau(PLATEAU_WIDTH, PLATEAU_HEIGHT);
+    var plateau = new Plateau(plateauCoordinates());
     plateau.occupyCoordinate(occupiedCoordinates());
     return plateau;
+  }
+
+  private Coordinates plateauCoordinates() {
+    return new Coordinates(PLATEAU_WIDTH, PLATEAU_HEIGHT);
   }
 
   private Coordinates occupiedCoordinates() {

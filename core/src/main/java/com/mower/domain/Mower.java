@@ -33,6 +33,6 @@ public class Mower {
   }
 
   public String situation() {
-    return coordinates.coordinateX() + " " + coordinates.coordinateY() + " " + faceTo.orientation().code();
+    return coordinates.situation() + " " + faceTo.situation();
   }
 }

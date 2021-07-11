@@ -1,5 +1,6 @@
 plugins {
     id "java-library"
+    id "com.github.spotbugs" version "4.7.1" apply false
 }
 
 wrapper {
@@ -33,6 +34,8 @@ subprojects {
 
     apply plugin: "java"
     apply plugin: "jacoco"
+    apply plugin: "pmd"
+    apply plugin: "com.github.spotbugs"
 
     java {
         toolchain {
@@ -49,5 +52,39 @@ subprojects {
 
     test {
         useJUnitPlatform()
+    }
+
+    check.finalizedBy(jacocoTestReport)
+
+    pmd {
+        ignoreFailures = true
+    }
+    pmdMain {
+        reports {
+            xml.required = false
+            html.required = true
+        }
+    }
+    pmdTest {
+        reports {
+            xml.required = false
+            html.required = true
+        }
+    }
+
+    spotbugs {
+        ignoreFailures = true
+    }
+    spotbugsMain {
+        reports {
+            xml.required = false
+            html.required = true
+        }
+    }
+    spotbugsTest {
+        reports {
+            xml.required = false
+            html.required = true
+        }
     }
 }
