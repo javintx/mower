@@ -44,7 +44,11 @@ public class CommandConsoleShould {
   private static final String INVALID_INPUT_MOWER_COMMANDS = "INVALID MOWER COMMANDS";
   private static final String VALID_INPUT_MOWER_COMMANDS = "LRM";
   private static final List<Command> EXPECTED_MOWER_COMMANDS = List.of(LEFT, RIGHT, MOVE);
-
+  private static final String VALID_INPUT_IS_FINISHED = "y";
+  private static final String VALID_INPUT_IS_NOT_FINISHED = "N";
+  private static final String INVALID_INPUT_IS_FINISHED = "INVALID";
+  private static final boolean EXPECTED_IS_FINISHED = true;
+  private static final boolean EXPECTED_IS_NOT_FINISHED = true;
 
   @Mock
   Scanner scannerMocked;
@@ -81,7 +85,16 @@ public class CommandConsoleShould {
 
   @Test
   void readIsFinished() {
+    when(scannerMocked.nextLine()).thenReturn(INVALID_INPUT_IS_FINISHED, VALID_INPUT_IS_FINISHED);
     assertThat(commandConsole.readIsFinished()).isTrue();
+    verify(scannerMocked, new Times(2)).nextLine();
+  }
+
+  @Test
+  void readIsNotFinished() {
+    when(scannerMocked.nextLine()).thenReturn(VALID_INPUT_IS_NOT_FINISHED);
+    assertThat(commandConsole.readIsFinished()).isFalse();
+    verify(scannerMocked, new Times(1)).nextLine();
   }
 
   @Test

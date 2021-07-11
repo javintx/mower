@@ -18,6 +18,7 @@ public class CommandConsole {
   private static final String USER_EXPLANATION_FOR_PLATEAU_COORDINATES = "Insert the upper right coordinates of the plateau (like: 5 5): ";
   private static final String USER_EXPLANATION_FOR_MOWER_DEFINITION = "Insert the mower definition (like: 1 2 N): ";
   private static final String USER_EXPLANATION_FOR_MOWER_COMMANDS = "Insert the mower commands (like: LRM): ";
+  private static final String USER_EXPLANATION_FOR_IS_FINISHED = "Do you want to finish? (y/n): ";
 
   private static final String PLATEAU_SEPARATOR_REGEX = " ";
   private static final String MOWER_SEPARATOR_REGEX = " ";
@@ -26,12 +27,14 @@ public class CommandConsole {
   private static final String PLATEAU_REGEX = NUMBER_REGEX + PLATEAU_SEPARATOR_REGEX + NUMBER_REGEX;
   private static final String MOWER_REGEX = NUMBER_REGEX + MOWER_SEPARATOR_REGEX + NUMBER_REGEX + MOWER_SEPARATOR_REGEX + "[NESW]";
   private static final String MOWER_COMMANDS_REGEX = "[LRM]+";
+  private static final String IS_FINISHED_REGEX = "[ynYN]";
 
   private static final int PLATEAU_WIDTH_INDEX = 0;
   private static final int PLATEAU_HEIGHT_INDEX = 1;
   private static final int MOWER_COORDINATE_X_INDEX = 0;
   private static final int MOWER_COORDINATE_Y_INDEX = 1;
   private static final int MOWER_CARDINAL_POINT_INDEX = 2;
+  private static final String FINISH_VALUE = "y";
 
   private final Scanner scanner;
 
@@ -114,7 +117,12 @@ public class CommandConsole {
   }
 
   public boolean readIsFinished() {
-    return true;
+    var isFinished = parseArgument(USER_EXPLANATION_FOR_IS_FINISHED, IS_FINISHED_REGEX);
+    return processIsFinishedWith(isFinished);
+  }
+
+  private boolean processIsFinishedWith(String isFinished) {
+    return FINISH_VALUE.equalsIgnoreCase(isFinished);
   }
 
   public void printSituationOf(final Mower mower) {
