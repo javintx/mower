@@ -62,13 +62,13 @@ subprojects {
     }
     pmdMain {
         reports {
-            xml.required = false
+            xml.required = true
             html.required = true
         }
     }
     pmdTest {
         reports {
-            xml.required = false
+            xml.required = true
             html.required = true
         }
     }
@@ -78,15 +78,22 @@ subprojects {
     }
     spotbugsMain {
         reports {
-            xml.required = false
+            xml.required = true
             html.required = true
         }
     }
     spotbugsTest {
         reports {
-            xml.required = false
+            xml.required = true
             html.required = true
         }
+    }
+}
+
+jacocoTestReport {
+    reports {
+        xml.required = true
+        html.required = true
     }
 }
 
