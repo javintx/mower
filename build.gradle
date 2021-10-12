@@ -88,12 +88,12 @@ subprojects {
             html.required = true
         }
     }
-}
 
-jacocoTestReport {
-    reports {
-        xml.required = true
-        html.required = true
+    jacocoTestReport {
+        reports {
+            xml.required = true
+            html.required = true
+        }
     }
 }
 
