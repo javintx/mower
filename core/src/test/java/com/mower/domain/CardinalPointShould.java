@@ -10,7 +10,7 @@ import static com.mower.domain.CardinalPoint.WEST;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class CardinalPointShould {
+class CardinalPointShould {
 
   private static final String UNKNOWN_CARDINAL_POINT_CODE = "UNKNOWN CARDINAL POINT CODE";
 

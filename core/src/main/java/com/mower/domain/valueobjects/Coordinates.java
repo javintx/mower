@@ -15,7 +15,7 @@ import static com.mower.domain.CardinalPoint.SOUTH;
 import static com.mower.domain.CardinalPoint.WEST;
 
 public class Coordinates {
-  private final static Map<CardinalPoint, Consumer<Coordinates>> MOVEMENTS = Map.of(
+  private static final Map<CardinalPoint, Consumer<Coordinates>> MOVEMENTS = Map.of(
       NORTH, Coordinates::upward,
       EAST, Coordinates::forward,
       SOUTH, Coordinates::downward,

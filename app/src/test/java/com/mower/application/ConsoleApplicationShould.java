@@ -24,7 +24,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class ConsoleApplicationShould {
+class ConsoleApplicationShould {
 
   private static final int ANY_WIDTH = 5;
   private static final int ANY_HEIGHT = 5;

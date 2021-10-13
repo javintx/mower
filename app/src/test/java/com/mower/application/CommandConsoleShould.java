@@ -25,7 +25,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class CommandConsoleShould {
+class CommandConsoleShould {
 
   private static final int ANY_COORDINATE_X = 1;
   private static final int ANY_COORDINATE_Y = 2;

@@ -5,6 +5,7 @@
 [![SonarCloud Coverage](https://sonarcloud.io/api/project_badges/measure?project=javintx_mower&metric=coverage)](https://sonarcloud.io/component_measures/metric/coverage/list?id=javintx_mower)
 [![SonarCloud Bugs](https://sonarcloud.io/api/project_badges/measure?project=javintx_mower&metric=bugs)](https://sonarcloud.io/component_measures/metric/reliability_rating/list?id=javintx_mower)
 [![SonarCloud Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=javintx_mower&metric=vulnerabilities)](https://sonarcloud.io/component_measures/metric/security_rating/list?id=javintx_mower)
+[![SonarCloud Code Smells](https://sonarcloud.io/api/project_badges/measure?project=javintx_mower&metric=code_smells)](https://sonarcloud.io/component_measures?id=javintx_mower&metric=Maintainability&view=list)
 
 ## The mower challenge
 

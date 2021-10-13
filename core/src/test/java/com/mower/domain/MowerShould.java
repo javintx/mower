@@ -15,7 +15,7 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-public class MowerShould {
+class MowerShould {
 
   public static final String EXPECTED_MOWER_SITUATION = "1 2 N";
   private static final int COORDINATE_X = 1;

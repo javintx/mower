@@ -7,7 +7,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class PlateauShould {
+class PlateauShould {
 
   private static final int ZERO_DIMENSION = 0;
   private static final int VALID_PLATEAU_WIDTH = 5;

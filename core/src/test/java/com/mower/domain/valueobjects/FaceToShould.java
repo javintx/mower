@@ -8,7 +8,7 @@ import static com.mower.domain.CardinalPoint.SOUTH;
 import static com.mower.domain.CardinalPoint.WEST;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class FaceToShould {
+class FaceToShould {
   @Test
   void returnNorthOrientation() {
     assertThat(faceToNorth().orientation()).isEqualTo(NORTH);

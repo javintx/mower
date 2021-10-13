@@ -7,16 +7,18 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.verify;
 
 @ExtendWith(MockitoExtension.class)
-public class MowerAppShould {
+class MowerAppShould {
   @Mock
   ConsoleApplication consoleApplicationMocked;
 
   @Test
-  public void main() {
+  void main() {
     doNothing().when(consoleApplicationMocked).start();
     MowerApp.initForTestPurposes(consoleApplicationMocked);
     MowerApp.main();
+    verify(consoleApplicationMocked).start();
   }
 }

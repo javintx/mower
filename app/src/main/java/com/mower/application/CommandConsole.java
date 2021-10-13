@@ -10,6 +10,8 @@ import com.mower.domain.valueobjects.FaceTo;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 public class CommandConsole {
@@ -32,6 +34,15 @@ public class CommandConsole {
   private static final int MOWER_COORDINATE_Y_INDEX = 1;
   private static final int MOWER_CARDINAL_POINT_INDEX = 2;
   private static final String FINISH_VALUE = "y";
+
+  /**
+   * Logger to handle writes to system.err.
+   */
+  private static final Logger SYSTEM_ERR_LOGGER = Logger.getLogger("system.err");
+  /**
+   * Logger to handle writes to system.out.
+   */
+  private static final Logger SYSTEM_OUT_LOGGER = Logger.getLogger("system.out");
 
   private final Scanner scanner;
 
@@ -67,11 +78,11 @@ public class CommandConsole {
   }
 
   public void printErrorMessage(String error) {
-    System.err.println(error);
+    SYSTEM_ERR_LOGGER.log(Level.ALL, error);
   }
 
   public void printMessage(String message) {
-    System.out.println(message);
+    SYSTEM_OUT_LOGGER.log(Level.ALL, message);
   }
 
   private Plateau processPlateauWith(String size) {

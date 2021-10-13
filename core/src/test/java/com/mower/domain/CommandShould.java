@@ -12,7 +12,7 @@ import static com.mower.domain.Command.RIGHT;
 import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class CommandShould {
+class CommandShould {
 
   private static final String UNKNOWN_COMMAND_CODE = "UNKNOWN COMMAND CODE";
   private static final int COORDINATE_X = 1;

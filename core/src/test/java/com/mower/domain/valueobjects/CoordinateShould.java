@@ -13,7 +13,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class CoordinateShould {
+class CoordinateShould {
 
   public static final String EXPECTED_COORDINATES_SITUATION = "1 2";
   private static final int COORDINATE_ZERO = 0;
