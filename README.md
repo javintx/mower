@@ -1,7 +1,7 @@
 # mower
 
 ![workflow](https://github.com/javintx/mower/actions/workflows/gradle.yml/badge.svg)
-[![Sonarcloud Status](https://sonarcloud.io/api/project_badges/measure?project=javintx_mower&metric=alert_status)](https://sonarcloud.io/dashboard?id=javintx_mower) 
+[![Sonarcloud Status](https://sonarcloud.io/api/project_badges/measure?project=javintx_mower&metric=alert_status)](https://sonarcloud.io/dashboard?id=javintx_mower)
 [![SonarCloud Coverage](https://sonarcloud.io/api/project_badges/measure?project=javintx_mower&metric=coverage)](https://sonarcloud.io/component_measures/metric/coverage/list?id=javintx_mower)
 [![SonarCloud Bugs](https://sonarcloud.io/api/project_badges/measure?project=javintx_mower&metric=bugs)](https://sonarcloud.io/component_measures/metric/reliability_rating/list?id=javintx_mower)
 [![SonarCloud Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=javintx_mower&metric=vulnerabilities)](https://sonarcloud.io/component_measures/metric/security_rating/list?id=javintx_mower)
@@ -82,6 +82,26 @@ In the `rootDirectory` execute:
 In the `rootDirectory/build/libs` execute:
 
 > java -jar mower-1.0.0.jar
+
+---
+
+# Docker
+
+## Generate Docker image
+
+To generate a Docker image with "mower" name after build the project, execute the next command:
+
+> docker build -t mower
+
+## Run Docker image
+
+To run the Docker image "mower", execute the next command:
+
+> docker run -i -t mower
+
+The -i and -t parameters provides input using your keyboard while the outputs is logged to your terminal.
+
+---
 
 # User manual
 
