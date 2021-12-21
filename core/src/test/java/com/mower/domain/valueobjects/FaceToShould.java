@@ -31,58 +31,42 @@ class FaceToShould {
 
   @Test
   void spinRightFromNorthToEast() {
-    var faceToNorth = faceToNorth();
-    faceToNorth.spinRight();
-    assertThat(faceToNorth.orientation()).isEqualTo(faceToEast().orientation());
+    assertThat(faceToNorth().spinRight()).isEqualTo(faceToEast());
   }
 
   @Test
   void spinRightFromEastToSouth() {
-    var faceToEast = faceToEast();
-    faceToEast.spinRight();
-    assertThat(faceToEast.orientation()).isEqualTo(faceToSouth().orientation());
+    assertThat(faceToEast().spinRight()).isEqualTo(faceToSouth());
   }
 
   @Test
   void spinRightFromSouthToWest() {
-    var faceToSouth = faceToSouth();
-    faceToSouth.spinRight();
-    assertThat(faceToSouth.orientation()).isEqualTo(faceToWest().orientation());
+    assertThat(faceToSouth().spinRight()).isEqualTo(faceToWest());
   }
 
   @Test
   void spinRightFromWestToNorth() {
-    var faceToWest = faceToWest();
-    faceToWest.spinRight();
-    assertThat(faceToWest.orientation()).isEqualTo(faceToNorth().orientation());
+    assertThat(faceToWest().spinRight()).isEqualTo(faceToNorth());
   }
 
   @Test
   void spinLeftFromNorthToWest() {
-    var faceToNorth = faceToNorth();
-    faceToNorth.spinLeft();
-    assertThat(faceToNorth.orientation()).isEqualTo(faceToWest().orientation());
+    assertThat(faceToNorth().spinLeft()).isEqualTo(faceToWest());
   }
 
   @Test
   void spinLeftFromEastToNorth() {
-    var faceToEast = faceToEast();
-    faceToEast.spinLeft();
-    assertThat(faceToEast.orientation()).isEqualTo(faceToNorth().orientation());
+    assertThat(faceToEast().spinLeft()).isEqualTo(faceToNorth());
   }
 
   @Test
   void spinLeftFromSouthToEast() {
-    var faceToSouth = faceToSouth();
-    faceToSouth.spinLeft();
-    assertThat(faceToSouth.orientation()).isEqualTo(faceToEast().orientation());
+    assertThat(faceToSouth().spinLeft()).isEqualTo(faceToEast());
   }
 
   @Test
   void spinLeftFromWestToSouth() {
-    var faceToWest = faceToWest();
-    faceToWest.spinLeft();
-    assertThat(faceToWest.orientation()).isEqualTo(faceToSouth().orientation());
+    assertThat(faceToWest().spinLeft()).isEqualTo(faceToSouth());
   }
 
   @Test

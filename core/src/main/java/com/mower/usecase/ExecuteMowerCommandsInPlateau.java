@@ -6,8 +6,9 @@ import com.mower.domain.Plateau;
 
 import java.util.List;
 
-public class ExecuteMowerCommandsInPlateau {
+public class ExecuteMowerCommandsInPlateau implements ExecuteMowerCommandsInPlateauUseCase {
 
+  @Override
   public void executeWith(final Plateau plateau, final Mower mower, final List<Command> commands) {
     for (Command command : commands) {
       mower.executeCommand(command);

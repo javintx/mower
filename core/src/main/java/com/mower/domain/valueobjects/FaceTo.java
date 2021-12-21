@@ -2,9 +2,11 @@ package com.mower.domain.valueobjects;
 
 import com.mower.domain.CardinalPoint;
 
-public class FaceTo {
+import java.util.Objects;
+
+public final class FaceTo {
   private static final int FIRST_CARDINAL_POINT_INDEX = 0;
-  private CardinalPoint cardinalPointOrientation;
+  private final CardinalPoint cardinalPointOrientation;
 
   public FaceTo(CardinalPoint initialOrientation) {
     this.cardinalPointOrientation = initialOrientation;
@@ -14,12 +16,12 @@ public class FaceTo {
     return cardinalPointOrientation;
   }
 
-  public void spinRight() {
-    this.cardinalPointOrientation = rightCardinalPoint();
+  public FaceTo spinRight() {
+    return new FaceTo(rightCardinalPoint());
   }
 
-  public void spinLeft() {
-    this.cardinalPointOrientation = leftCardinalPoint();
+  public FaceTo spinLeft() {
+    return new FaceTo(leftCardinalPoint());
   }
 
   public String situation() {
@@ -57,5 +59,18 @@ public class FaceTo {
   private CardinalPoint getLastCardinalPoint() {
     int previousCardinalPointIndex = CardinalPoint.values().length - 1;
     return CardinalPoint.values()[previousCardinalPointIndex];
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    FaceTo faceTo = (FaceTo) o;
+    return cardinalPointOrientation == faceTo.cardinalPointOrientation;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(cardinalPointOrientation);
   }
 }

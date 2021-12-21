@@ -6,16 +6,14 @@ import java.util.Arrays;
 import java.util.function.Consumer;
 
 public enum Command {
-  LEFT("L", Mower::spinLeft),
-  RIGHT("R", Mower::spinRight),
-  MOVE("M", Mower::moveForward);
+  LEFT("L"),
+  RIGHT("R"),
+  MOVE("M");
 
   private final String code;
-  private final Consumer<Mower> action;
 
-  Command(String code, final Consumer<Mower> action) {
+  Command(String code) {
     this.code = code;
-    this.action = action;
   }
 
   public static Command fromCode(String commandCode) {
@@ -23,9 +21,5 @@ public enum Command {
         .filter(command -> command.code.equalsIgnoreCase(commandCode))
         .findAny()
         .orElseThrow(() -> new UnknownCommandCode(commandCode));
-  }
-
-  public void execute(final Mower mower) {
-    action.accept(mower);
   }
 }

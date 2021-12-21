@@ -39,21 +39,6 @@ class CommandShould {
     assertSame(MOVE, Command.fromCode("M"));
   }
 
-  @Test
-  void executeLeftCommandAction() {
-    LEFT.execute(mower());
-  }
-
-  @Test
-  void executeRightCommandAction() {
-    RIGHT.execute(mower());
-  }
-
-  @Test
-  void executeMoveCommandAction() {
-    MOVE.execute(mower());
-  }
-
   private Mower mower() {
     return new Mower(coordinates(), faceTo());
   }

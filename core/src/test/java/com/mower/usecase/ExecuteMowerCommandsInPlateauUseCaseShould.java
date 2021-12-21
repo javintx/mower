@@ -25,7 +25,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class ExecuteMowerCommandsInPlateauShould {
+class ExecuteMowerCommandsInPlateauUseCaseShould {
 
   @Mock
   Plateau plateauMocked;
@@ -33,7 +33,7 @@ class ExecuteMowerCommandsInPlateauShould {
   Mower mowerMocked;
   @Mock
   Coordinates coordinatesMocked;
-  private ExecuteMowerCommandsInPlateau executeMowerCommandsInPlateau;
+  private ExecuteMowerCommandsInPlateauUseCase executeMowerCommandsInPlateau;
 
   @BeforeEach
   void setUp() {
