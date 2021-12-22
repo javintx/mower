@@ -97,10 +97,10 @@ subprojects {
 }
 
 sonarqube {
-  properties {
-    property "sonar.projectKey", "javintx_mower"
-    property "sonar.organization", "javintx"
-    property "sonar.host.url", "https://sonarcloud.io"
-  }
+    properties {
+        property "sonar.projectKey", "javintx_mower"
+        property "sonar.organization", "javintx"
+        property "sonar.host.url", "https://sonarcloud.io"
+    }
 }
 

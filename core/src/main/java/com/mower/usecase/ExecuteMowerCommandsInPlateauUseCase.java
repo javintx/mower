@@ -7,5 +7,5 @@ import com.mower.domain.Plateau;
 import java.util.List;
 
 public interface ExecuteMowerCommandsInPlateauUseCase {
-    void executeWith(final Plateau plateau, final Mower mower, final List<Command> commands);
+  void executeWith(final Plateau plateau, final Mower mower, final List<Command> commands);
 }

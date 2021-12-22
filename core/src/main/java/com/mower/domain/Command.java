@@ -3,7 +3,6 @@ package com.mower.domain;
 import com.mower.domain.exception.UnknownCommandCode;
 
 import java.util.Arrays;
-import java.util.function.Consumer;
 
 public enum Command {
   LEFT("L"),
