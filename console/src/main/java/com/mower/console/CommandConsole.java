@@ -66,19 +66,19 @@ public class CommandConsole {
     printMessage(String.format("Mower situation: %s%n", mower.situation()));
   }
 
-  public void printErrorMessage(String error) {
+  public void printErrorMessage(final String error) {
     System.err.println(error);
   }
 
-  public void printMessage(String message) {
+  public void printMessage(final String message) {
     System.out.println(message);
   }
 
-  private Plateau processPlateauWith(String size) {
+  private Plateau processPlateauWith(final String size) {
     return new Plateau(processCoordinatesFrom(size));
   }
 
-  private boolean verifyMower(final Plateau plateau, String mowerDefinition) {
+  private boolean verifyMower(final Plateau plateau, final String mowerDefinition) {
     try {
       plateau.verifyCoordinates(processCoordinatesFrom(mowerDefinition));
       return true;
@@ -88,21 +88,21 @@ public class CommandConsole {
     return false;
   }
 
-  private Coordinates processCoordinatesFrom(String coordinateDefinition) {
+  private Coordinates processCoordinatesFrom(final String coordinateDefinition) {
     return new Coordinates(
         coordinateXFrom(coordinateDefinition),
         coordinateYFrom(coordinateDefinition));
   }
 
-  private int coordinateXFrom(String mowerDefinition) {
+  private int coordinateXFrom(final String mowerDefinition) {
     return Integer.parseInt(mowerDefinition.split(MOWER_SEPARATOR_REGEX)[MOWER_COORDINATE_X_INDEX]);
   }
 
-  private int coordinateYFrom(String mowerDefinition) {
+  private int coordinateYFrom(final String mowerDefinition) {
     return Integer.parseInt(mowerDefinition.split(MOWER_SEPARATOR_REGEX)[MOWER_COORDINATE_Y_INDEX]);
   }
 
-  private Mower processMowerWith(String mowerDefinition) {
+  private Mower processMowerWith(final String mowerDefinition) {
     var mowerCoordinates = processCoordinatesFrom(mowerDefinition);
     return new Mower(
         mowerCoordinates,
@@ -110,22 +110,22 @@ public class CommandConsole {
     );
   }
 
-  private FaceTo processFaceToFrom(String mowerDefinition) {
+  private FaceTo processFaceToFrom(final String mowerDefinition) {
     return new FaceTo(CardinalPoint.fromCode(mowerDefinition.split(MOWER_SEPARATOR_REGEX)[MOWER_CARDINAL_POINT_INDEX]));
   }
 
-  private List<Command> processCommandsWith(String mowerCommands) {
+  private List<Command> processCommandsWith(final String mowerCommands) {
     return Arrays
         .stream(mowerCommands.split(COMMANDS_SEPARATOR_REGEX))
         .map(Command::fromCode)
         .collect(Collectors.toList());
   }
 
-  private boolean processIsFinishedWith(String isFinished) {
+  private boolean processIsFinishedWith(final String isFinished) {
     return FINISH_VALUE.equalsIgnoreCase(isFinished);
   }
 
-  private String parseArgument(String userExplanation, String validationRegex) {
+  private String parseArgument(final String userExplanation, final String validationRegex) {
     String argument;
     do {
       argument = askForArgumentWith(userExplanation);
@@ -133,12 +133,12 @@ public class CommandConsole {
     return argument;
   }
 
-  private String askForArgumentWith(String userExplanation) {
+  private String askForArgumentWith(final String userExplanation) {
     printMessage(userExplanation);
     return scanner.nextLine();
   }
 
-  private boolean validateArgument(String validationRegex, String argument) {
+  private boolean validateArgument(final String validationRegex, final String argument) {
     return argument.matches(validationRegex);
   }
 }

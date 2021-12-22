@@ -1,6 +1,6 @@
 package com.mower.domain.exception;
 
-public class CoordinatesMustBePositiveNumbers extends RuntimeException {
+public final class CoordinatesMustBePositiveNumbers extends RuntimeException {
 
   public static final String CAUSE = "Invalid coordinates (%d, %d). They should be positive";
   private static final long serialVersionUID = -1238431735798408308L;

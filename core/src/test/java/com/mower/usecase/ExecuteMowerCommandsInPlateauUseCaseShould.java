@@ -62,7 +62,8 @@ class ExecuteMowerCommandsInPlateauUseCaseShould {
   void executeWithThrowCoordinatesAreOutsidePlateau() {
     when(mowerMocked.coordinates()).thenReturn(coordinatesMocked);
     doThrow(CoordinatesAreOutside.class).when(plateauMocked).verifyCoordinates(any(Coordinates.class));
-    assertThrows(CoordinatesAreOutside.class, () -> this.executeMowerCommandsInPlateau.executeWith(plateauMocked, mowerMocked, commands()));
+    var commands = commands();
+    assertThrows(CoordinatesAreOutside.class, () -> this.executeMowerCommandsInPlateau.executeWith(plateauMocked, mowerMocked, commands));
     verify(mowerMocked, new Times(1)).executeCommand(any(Command.class));
     verify(mowerMocked, new Times(1)).coordinates();
     verify(plateauMocked, new Times(0)).occupyCoordinate(any(Coordinates.class));
@@ -72,7 +73,8 @@ class ExecuteMowerCommandsInPlateauUseCaseShould {
   void executeWithThrowCoordinatesAreOccupied() {
     when(mowerMocked.coordinates()).thenReturn(coordinatesMocked);
     doThrow(CoordinatesAreOccupied.class).when(plateauMocked).verifyCoordinates(any(Coordinates.class));
-    assertThrows(CoordinatesAreOccupied.class, () -> this.executeMowerCommandsInPlateau.executeWith(plateauMocked, mowerMocked, commands()));
+    var commands = commands();
+    assertThrows(CoordinatesAreOccupied.class, () -> this.executeMowerCommandsInPlateau.executeWith(plateauMocked, mowerMocked, commands));
     verify(mowerMocked, new Times(1)).executeCommand(any(Command.class));
     verify(mowerMocked, new Times(1)).coordinates();
     verify(plateauMocked, new Times(0)).occupyCoordinate(any(Coordinates.class));

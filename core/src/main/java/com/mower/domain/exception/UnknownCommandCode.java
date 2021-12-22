@@ -1,6 +1,6 @@
 package com.mower.domain.exception;
 
-public class UnknownCommandCode extends RuntimeException {
+public final class UnknownCommandCode extends RuntimeException {
 
   public static final String CAUSE = "Unknown command code %s";
   private static final long serialVersionUID = 1141308357161570310L;

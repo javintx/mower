@@ -15,7 +15,7 @@ public class MowerApp {
     consoleApplication.start(new ExecuteMowerCommandsInPlateau());
   }
 
-  static void initForTestPurposes(ConsoleApplication testConsoleApplication) {
+  static void initForTestPurposes(final ConsoleApplication testConsoleApplication) {
     consoleApplication = testConsoleApplication;
   }
 

@@ -10,11 +10,11 @@ public class ConsoleApplication {
 
   private final CommandConsole commandConsole;
 
-  public ConsoleApplication(CommandConsole commandConsole) {
+  public ConsoleApplication(final CommandConsole commandConsole) {
     this.commandConsole = commandConsole;
   }
 
-  public void start(ExecuteMowerCommandsInPlateauUseCase executeMowerCommandsInPlateau) {
+  public void start(final ExecuteMowerCommandsInPlateauUseCase executeMowerCommandsInPlateau) {
     var plateau = commandConsole.readPlateau();
     readAndExecuteCommands(commandConsole, plateau, executeMowerCommandsInPlateau);
   }

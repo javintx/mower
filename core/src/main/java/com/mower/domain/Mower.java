@@ -16,7 +16,7 @@ public final class Mower {
     return coordinates;
   }
 
-  public void executeCommand(Command command) {
+  public void executeCommand(final Command command) {
     switch (command) {
       case MOVE:
         moveForward();
@@ -27,8 +27,6 @@ public final class Mower {
       case RIGHT:
         spinRight();
         break;
-      default:
-        throw new RuntimeException("Command not implemented");
     }
   }
 
