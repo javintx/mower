@@ -1,5 +1,5 @@
 rootProject.name = 'mower'
 include 'core'
-include 'app'
+include 'application'
 include 'console'
 

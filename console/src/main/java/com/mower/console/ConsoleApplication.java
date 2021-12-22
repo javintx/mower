@@ -1,4 +1,4 @@
-package com.mower.application;
+package com.mower.console;
 
 import com.mower.domain.Mower;
 import com.mower.domain.Plateau;

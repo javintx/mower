@@ -1,7 +1,7 @@
-package com.mower;
+package com.mower.application;
 
-import com.mower.application.CommandConsole;
-import com.mower.application.ConsoleApplication;
+import com.mower.console.CommandConsole;
+import com.mower.console.ConsoleApplication;
 import com.mower.usecase.ExecuteMowerCommandsInPlateau;
 
 import java.nio.charset.Charset;

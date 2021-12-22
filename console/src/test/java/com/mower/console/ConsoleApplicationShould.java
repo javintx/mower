@@ -1,4 +1,4 @@
-package com.mower.application;
+package com.mower.console;
 
 import com.mower.domain.CardinalPoint;
 import com.mower.domain.Command;

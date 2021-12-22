@@ -1,4 +1,4 @@
-package com.mower.application;
+package com.mower.console;
 
 import com.mower.domain.CardinalPoint;
 import com.mower.domain.Command;
@@ -20,6 +20,7 @@ import static com.mower.domain.CardinalPoint.NORTH;
 import static com.mower.domain.Command.LEFT;
 import static com.mower.domain.Command.MOVE;
 import static com.mower.domain.Command.RIGHT;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 

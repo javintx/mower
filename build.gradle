@@ -9,7 +9,7 @@ wrapper {
 }
 
 dependencies {
-    implementation project(":app")
+    implementation project(":application")
     implementation project(":console")
     implementation project(":core")
 }
