@@ -9,7 +9,6 @@ import static com.mower.domain.CardinalPoint.NORTH;
 import static com.mower.domain.CardinalPoint.SOUTH;
 import static com.mower.domain.CardinalPoint.WEST;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -97,8 +96,7 @@ class CoordinateShould {
   @Test
   void ensureSameCoordinatesIsEqualsToItself() {
     var coordinates = coordinates();
-    // assertThat(coordinates).isEqualsTo(coordinates) does not works for this case
-    assertEquals(coordinates, coordinates);
+    assertThat(coordinates).isEqualTo(coordinates);
   }
 
   @Test

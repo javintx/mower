@@ -7,6 +7,7 @@ import static com.mower.domain.CardinalPoint.NORTH;
 import static com.mower.domain.CardinalPoint.SOUTH;
 import static com.mower.domain.CardinalPoint.WEST;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class FaceToShould {
   @Test
@@ -87,6 +88,42 @@ class FaceToShould {
   @Test
   void printFaceToWestSituation() {
     assertThat(faceToWest().situation()).isEqualTo(WEST.code());
+  }
+
+  @Test
+  void ensureTwoFaceToWithSameValuesAreEquals() {
+    assertThat(faceToNorth()).isEqualTo(faceToNorth());
+  }
+
+  @Test
+  void ensureSameFaceToIsEqualsToItself() {
+    var faceTo = faceToNorth();
+    assertThat(faceTo).isEqualTo(faceTo);
+  }
+
+  @Test
+  void ensureOtherClassIsNotEqualsToFaceTo() {
+    assertNotEquals(faceToNorth(), "String class");
+  }
+
+  @Test
+  void ensureNullIsNotEqualsToFaceTo() {
+    assertNotEquals(faceToNorth(), null);
+  }
+
+  @Test
+  void ensureTwoFaceToWithDifferentCardinalPointAreNotEquals() {
+    assertNotEquals(faceToNorth(), faceToSouth());
+  }
+
+  @Test
+  void ensureTwoFaceToWithSameValuesHaveSameHashCode() {
+    assertThat(faceToNorth().hashCode()).isEqualTo(faceToNorth().hashCode());
+  }
+
+  @Test
+  void ensureTwoFaceToWithDifferentValuesHaveDifferentHashCode() {
+    assertThat(faceToNorth().hashCode()).isNotEqualTo(faceToSouth().hashCode());
   }
 
   private FaceTo faceToNorth() {

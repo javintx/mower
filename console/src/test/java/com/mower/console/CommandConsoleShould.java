@@ -1,11 +1,9 @@
 package com.mower.console;
 
-import com.mower.domain.CardinalPoint;
 import com.mower.domain.Command;
 import com.mower.domain.Mower;
 import com.mower.domain.Plateau;
 import com.mower.domain.valueobjects.Coordinates;
-import com.mower.domain.valueobjects.FaceTo;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -16,7 +14,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.util.List;
 import java.util.Scanner;
 
-import static com.mower.domain.CardinalPoint.NORTH;
 import static com.mower.domain.Command.LEFT;
 import static com.mower.domain.Command.MOVE;
 import static com.mower.domain.Command.RIGHT;
@@ -27,9 +24,6 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class CommandConsoleShould {
 
-  private static final int ANY_COORDINATE_X = 1;
-  private static final int ANY_COORDINATE_Y = 2;
-  private static final CardinalPoint ANY_CARDINAL_POINT = NORTH;
   private static final String VALID_INPUT_PLATEAU_DIMENSIONS = "5 5";
   private static final String INVALID_INPUT_PLATEAU_DIMENSIONS = "INVALID DIMENSIONS";
   private static final int PLATEAU_WIDTH = 5;
@@ -47,11 +41,11 @@ class CommandConsoleShould {
   private static final String VALID_INPUT_IS_FINISHED = "y";
   private static final String VALID_INPUT_IS_NOT_FINISHED = "N";
   private static final String INVALID_INPUT_IS_FINISHED = "INVALID";
-  private static final String ANY_ERROR_MESSAGE = "ANY ERROR MESSAGE";
-  private static final String ANY_MESSAGE = "ANY MESSAGE";
 
   @Mock
   Scanner scannerMocked;
+  @Mock
+  Mower mowerMocked;
   private CommandConsole commandConsole;
 
   @BeforeEach
@@ -99,29 +93,8 @@ class CommandConsoleShould {
 
   @Test
   void printSituationOfMower() {
-    commandConsole.printSituationOf(anyMower());
-  }
-
-  @Test
-  void printMessage() {
-    commandConsole.printMessage(ANY_MESSAGE);
-  }
-
-  @Test
-  void printErrorMessage() {
-    commandConsole.printErrorMessage(ANY_ERROR_MESSAGE);
-  }
-
-  private Mower anyMower() {
-    return new Mower(anyCoordinates(), anyFaceTo());
-  }
-
-  private Coordinates anyCoordinates() {
-    return new Coordinates(ANY_COORDINATE_X, ANY_COORDINATE_Y);
-  }
-
-  private FaceTo anyFaceTo() {
-    return new FaceTo(ANY_CARDINAL_POINT);
+    commandConsole.printSituationOf(mowerMocked);
+    verify(mowerMocked, new Times(1)).situation();
   }
 
   private Plateau plateauWithOccupiedCoordinates() {

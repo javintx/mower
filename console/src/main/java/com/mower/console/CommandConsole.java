@@ -70,7 +70,7 @@ public class CommandConsole {
     System.err.println(error);
   }
 
-  public void printMessage(final String message) {
+  private void printMessage(final String message) {
     System.out.println(message);
   }
 
