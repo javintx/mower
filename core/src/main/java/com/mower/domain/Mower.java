@@ -3,9 +3,9 @@ package com.mower.domain;
 import com.mower.domain.valueobjects.Coordinates;
 import com.mower.domain.valueobjects.FaceTo;
 
-public class Mower {
-  private final Coordinates coordinates;
-  private final FaceTo faceTo;
+public final class Mower {
+  private Coordinates coordinates;
+  private FaceTo faceTo;
 
   public Mower(final Coordinates initialCoordinates, final FaceTo initialFaceTo) {
     this.coordinates = initialCoordinates;
@@ -16,23 +16,34 @@ public class Mower {
     return coordinates;
   }
 
-  public void executeCommand(Command command) {
-    command.execute(this);
+  public void executeCommand(final Command command) {
+    switch (command) {
+      case MOVE:
+        moveForward();
+        break;
+      case LEFT:
+        spinLeft();
+        break;
+      case RIGHT:
+        spinRight();
+        break;
+    }
   }
 
-  public void moveForward() {
-    this.coordinates.moveTowards(this.faceTo.orientation());
+  private void moveForward() {
+    this.coordinates = this.coordinates.moveTowards(this.faceTo.orientation());
   }
 
-  public void spinRight() {
-    this.faceTo.spinRight();
+  private void spinRight() {
+    this.faceTo = this.faceTo.spinRight();
   }
 
-  public void spinLeft() {
-    this.faceTo.spinLeft();
+  private void spinLeft() {
+    this.faceTo = this.faceTo.spinLeft();
   }
 
   public String situation() {
     return coordinates.situation() + " " + faceTo.situation();
   }
+
 }

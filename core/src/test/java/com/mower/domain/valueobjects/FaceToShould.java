@@ -7,6 +7,7 @@ import static com.mower.domain.CardinalPoint.NORTH;
 import static com.mower.domain.CardinalPoint.SOUTH;
 import static com.mower.domain.CardinalPoint.WEST;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 class FaceToShould {
   @Test
@@ -31,58 +32,42 @@ class FaceToShould {
 
   @Test
   void spinRightFromNorthToEast() {
-    var faceToNorth = faceToNorth();
-    faceToNorth.spinRight();
-    assertThat(faceToNorth.orientation()).isEqualTo(faceToEast().orientation());
+    assertThat(faceToNorth().spinRight()).isEqualTo(faceToEast());
   }
 
   @Test
   void spinRightFromEastToSouth() {
-    var faceToEast = faceToEast();
-    faceToEast.spinRight();
-    assertThat(faceToEast.orientation()).isEqualTo(faceToSouth().orientation());
+    assertThat(faceToEast().spinRight()).isEqualTo(faceToSouth());
   }
 
   @Test
   void spinRightFromSouthToWest() {
-    var faceToSouth = faceToSouth();
-    faceToSouth.spinRight();
-    assertThat(faceToSouth.orientation()).isEqualTo(faceToWest().orientation());
+    assertThat(faceToSouth().spinRight()).isEqualTo(faceToWest());
   }
 
   @Test
   void spinRightFromWestToNorth() {
-    var faceToWest = faceToWest();
-    faceToWest.spinRight();
-    assertThat(faceToWest.orientation()).isEqualTo(faceToNorth().orientation());
+    assertThat(faceToWest().spinRight()).isEqualTo(faceToNorth());
   }
 
   @Test
   void spinLeftFromNorthToWest() {
-    var faceToNorth = faceToNorth();
-    faceToNorth.spinLeft();
-    assertThat(faceToNorth.orientation()).isEqualTo(faceToWest().orientation());
+    assertThat(faceToNorth().spinLeft()).isEqualTo(faceToWest());
   }
 
   @Test
   void spinLeftFromEastToNorth() {
-    var faceToEast = faceToEast();
-    faceToEast.spinLeft();
-    assertThat(faceToEast.orientation()).isEqualTo(faceToNorth().orientation());
+    assertThat(faceToEast().spinLeft()).isEqualTo(faceToNorth());
   }
 
   @Test
   void spinLeftFromSouthToEast() {
-    var faceToSouth = faceToSouth();
-    faceToSouth.spinLeft();
-    assertThat(faceToSouth.orientation()).isEqualTo(faceToEast().orientation());
+    assertThat(faceToSouth().spinLeft()).isEqualTo(faceToEast());
   }
 
   @Test
   void spinLeftFromWestToSouth() {
-    var faceToWest = faceToWest();
-    faceToWest.spinLeft();
-    assertThat(faceToWest.orientation()).isEqualTo(faceToSouth().orientation());
+    assertThat(faceToWest().spinLeft()).isEqualTo(faceToSouth());
   }
 
   @Test
@@ -103,6 +88,42 @@ class FaceToShould {
   @Test
   void printFaceToWestSituation() {
     assertThat(faceToWest().situation()).isEqualTo(WEST.code());
+  }
+
+  @Test
+  void ensureTwoFaceToWithSameValuesAreEquals() {
+    assertThat(faceToNorth()).isEqualTo(faceToNorth());
+  }
+
+  @Test
+  void ensureSameFaceToIsEqualsToItself() {
+    var faceTo = faceToNorth();
+    assertThat(faceTo).isEqualTo(faceTo);
+  }
+
+  @Test
+  void ensureOtherClassIsNotEqualsToFaceTo() {
+    assertNotEquals(faceToNorth(), "String class");
+  }
+
+  @Test
+  void ensureNullIsNotEqualsToFaceTo() {
+    assertNotEquals(faceToNorth(), null);
+  }
+
+  @Test
+  void ensureTwoFaceToWithDifferentCardinalPointAreNotEquals() {
+    assertNotEquals(faceToNorth(), faceToSouth());
+  }
+
+  @Test
+  void ensureTwoFaceToWithSameValuesHaveSameHashCode() {
+    assertThat(faceToNorth().hashCode()).isEqualTo(faceToNorth().hashCode());
+  }
+
+  @Test
+  void ensureTwoFaceToWithDifferentValuesHaveDifferentHashCode() {
+    assertThat(faceToNorth().hashCode()).isNotEqualTo(faceToSouth().hashCode());
   }
 
   private FaceTo faceToNorth() {

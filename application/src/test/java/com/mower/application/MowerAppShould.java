@@ -1,11 +1,13 @@
-package com.mower;
+package com.mower.application;
 
-import com.mower.application.ConsoleApplication;
+import com.mower.console.ConsoleApplication;
+import com.mower.usecase.ExecuteMowerCommandsInPlateauUseCase;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.verify;
 
@@ -16,9 +18,9 @@ class MowerAppShould {
 
   @Test
   void main() {
-    doNothing().when(consoleApplicationMocked).start();
+    doNothing().when(consoleApplicationMocked).start(any(ExecuteMowerCommandsInPlateauUseCase.class));
     MowerApp.initForTestPurposes(consoleApplicationMocked);
     MowerApp.main();
-    verify(consoleApplicationMocked).start();
+    verify(consoleApplicationMocked).start(any(ExecuteMowerCommandsInPlateauUseCase.class));
   }
 }

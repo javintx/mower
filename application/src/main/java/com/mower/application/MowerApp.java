@@ -1,7 +1,8 @@
-package com.mower;
+package com.mower.application;
 
-import com.mower.application.CommandConsole;
-import com.mower.application.ConsoleApplication;
+import com.mower.console.CommandConsole;
+import com.mower.console.ConsoleApplication;
+import com.mower.usecase.ExecuteMowerCommandsInPlateau;
 
 import java.nio.charset.Charset;
 import java.util.Scanner;
@@ -11,10 +12,10 @@ public class MowerApp {
   private static ConsoleApplication consoleApplication = new ConsoleApplication(systemInputCommandConsole());
 
   public static void main(String... args) {
-    consoleApplication.start();
+    consoleApplication.start(new ExecuteMowerCommandsInPlateau());
   }
 
-  static void initForTestPurposes(ConsoleApplication testConsoleApplication) {
+  static void initForTestPurposes(final ConsoleApplication testConsoleApplication) {
     consoleApplication = testConsoleApplication;
   }
 

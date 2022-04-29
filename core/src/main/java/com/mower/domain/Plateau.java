@@ -6,7 +6,7 @@ import com.mower.domain.valueobjects.Coordinates;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Plateau {
+public final class Plateau {
 
   public static final int ZERO_COORDINATE = 0;
   private final Coordinates upperRightCoordinates;

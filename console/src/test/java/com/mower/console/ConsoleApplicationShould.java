@@ -1,4 +1,4 @@
-package com.mower.application;
+package com.mower.console;
 
 import com.mower.domain.CardinalPoint;
 import com.mower.domain.Command;
@@ -6,6 +6,7 @@ import com.mower.domain.Mower;
 import com.mower.domain.Plateau;
 import com.mower.domain.valueobjects.Coordinates;
 import com.mower.domain.valueobjects.FaceTo;
+import com.mower.usecase.ExecuteMowerCommandsInPlateau;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -55,7 +56,7 @@ class ConsoleApplicationShould {
     when(commandConsole.readMowerGiven(any(Plateau.class))).thenReturn(anyMower());
     when(commandConsole.readMowerCommands()).thenReturn(ANY_MOWER_COMMANDS);
     when(commandConsole.readIsFinished()).thenReturn(FINISHED_VALUE);
-    consoleApplication.start();
+    consoleApplication.start(new ExecuteMowerCommandsInPlateau());
     verify(commandConsole).printSituationOf(any(Mower.class));
   }
 
@@ -65,7 +66,7 @@ class ConsoleApplicationShould {
     when(commandConsole.readMowerGiven(any(Plateau.class))).thenReturn(anyMower());
     when(commandConsole.readMowerCommands()).thenReturn(TO_OUTSIDE_MOWER_COMMANDS);
     when(commandConsole.readIsFinished()).thenReturn(FINISHED_VALUE);
-    consoleApplication.start();
+    consoleApplication.start(new ExecuteMowerCommandsInPlateau());
     verify(commandConsole).printErrorMessage(any(String.class));
   }
 
@@ -75,7 +76,7 @@ class ConsoleApplicationShould {
     when(commandConsole.readMowerGiven(any(Plateau.class))).thenReturn(anyMower()).thenReturn(anyOtherMower());
     when(commandConsole.readMowerCommands()).thenReturn(NO_MOWER_COMMANDS).thenReturn(ANY_OTHER_MOWER_COMMANDS);
     when(commandConsole.readIsFinished()).thenReturn(NO_FINISHED_VALUE).thenReturn(FINISHED_VALUE);
-    consoleApplication.start();
+    consoleApplication.start(new ExecuteMowerCommandsInPlateau());
     verify(commandConsole, new Times(2)).printSituationOf(any(Mower.class));
     verify(commandConsole).printErrorMessage(any(String.class));
   }

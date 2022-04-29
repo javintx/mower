@@ -1,33 +1,31 @@
-package com.mower.application;
+package com.mower.console;
 
 import com.mower.domain.Mower;
 import com.mower.domain.Plateau;
 import com.mower.domain.exception.CoordinatesAreOccupied;
 import com.mower.domain.exception.CoordinatesAreOutside;
-import com.mower.usecase.ExecuteMowerCommandsInPlateau;
+import com.mower.usecase.ExecuteMowerCommandsInPlateauUseCase;
 
 public class ConsoleApplication {
 
   private final CommandConsole commandConsole;
 
-  public ConsoleApplication(CommandConsole commandConsole) {
+  public ConsoleApplication(final CommandConsole commandConsole) {
     this.commandConsole = commandConsole;
   }
 
-  public void start() {
+  public void start(final ExecuteMowerCommandsInPlateauUseCase executeMowerCommandsInPlateau) {
     var plateau = commandConsole.readPlateau();
-
-    var executeMowerCommandsInPlateau = new ExecuteMowerCommandsInPlateau();
     readAndExecuteCommands(commandConsole, plateau, executeMowerCommandsInPlateau);
   }
 
-  private void readAndExecuteCommands(final CommandConsole commandConsole, final Plateau plateau, final ExecuteMowerCommandsInPlateau executeMowerCommandsInPlateau) {
+  private void readAndExecuteCommands(final CommandConsole commandConsole, final Plateau plateau, final ExecuteMowerCommandsInPlateauUseCase executeMowerCommandsInPlateau) {
     do {
       readAndExecuteCommand(commandConsole, plateau, executeMowerCommandsInPlateau);
     } while (!commandConsole.readIsFinished());
   }
 
-  private void readAndExecuteCommand(final CommandConsole commandConsole, final Plateau plateau, final ExecuteMowerCommandsInPlateau executeMowerCommandsInPlateau) {
+  private void readAndExecuteCommand(final CommandConsole commandConsole, final Plateau plateau, final ExecuteMowerCommandsInPlateauUseCase executeMowerCommandsInPlateau) {
     var mower = commandConsole.readMowerGiven(plateau);
     var mowerCommands = commandConsole.readMowerCommands();
     try {

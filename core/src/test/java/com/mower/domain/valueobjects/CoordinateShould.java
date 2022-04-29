@@ -9,7 +9,6 @@ import static com.mower.domain.CardinalPoint.NORTH;
 import static com.mower.domain.CardinalPoint.SOUTH;
 import static com.mower.domain.CardinalPoint.WEST;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -71,30 +70,22 @@ class CoordinateShould {
 
   @Test
   void moveTowardsNorth() {
-    var coordinates = coordinates();
-    coordinates.moveTowards(NORTH);
-    assertThat(coordinates).isEqualTo(coordinatesMovedToNorth());
+    assertThat(coordinates().moveTowards(NORTH)).isEqualTo(coordinatesMovedToNorth());
   }
 
   @Test
   void moveTowardsEast() {
-    var coordinates = coordinates();
-    coordinates.moveTowards(EAST);
-    assertThat(coordinates).isEqualTo(coordinatesMovedToEast());
+    assertThat(coordinates().moveTowards(EAST)).isEqualTo(coordinatesMovedToEast());
   }
 
   @Test
   void moveTowardsSouth() {
-    var coordinates = coordinates();
-    coordinates.moveTowards(SOUTH);
-    assertThat(coordinates).isEqualTo(coordinatesMovedToSouth());
+    assertThat(coordinates().moveTowards(SOUTH)).isEqualTo(coordinatesMovedToSouth());
   }
 
   @Test
   void moveTowardsWest() {
-    var coordinates = coordinates();
-    coordinates.moveTowards(WEST);
-    assertThat(coordinates).isEqualTo(coordinatesMovedToWest());
+    assertThat(coordinates().moveTowards(WEST)).isEqualTo(coordinatesMovedToWest());
   }
 
   @Test
@@ -105,8 +96,7 @@ class CoordinateShould {
   @Test
   void ensureSameCoordinatesIsEqualsToItself() {
     var coordinates = coordinates();
-    // assertThat(coordinates).isEqualsTo(coordinates) does not works for this case
-    assertEquals(coordinates, coordinates);
+    assertThat(coordinates).isEqualTo(coordinates);
   }
 
   @Test
