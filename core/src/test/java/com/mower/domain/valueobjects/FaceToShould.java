@@ -103,7 +103,7 @@ class FaceToShould {
 
   @Test
   void ensureOtherClassIsNotEqualsToFaceTo() {
-    assertThat(faceToNorth()).isNotEqualTo(String.class);
+    assertNotEquals(faceToNorth(), otherObject());
   }
 
   @Test
@@ -124,6 +124,11 @@ class FaceToShould {
   @Test
   void ensureTwoFaceToWithDifferentValuesHaveDifferentHashCode() {
     assertThat(faceToNorth()).doesNotHaveSameHashCodeAs(faceToSouth());
+  }
+
+
+  private Object otherObject() {
+    return Object.class;
   }
 
   private FaceTo faceToNorth() {

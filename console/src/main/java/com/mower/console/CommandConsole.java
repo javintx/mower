@@ -10,7 +10,6 @@ import com.mower.domain.valueobjects.FaceTo;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
-import java.util.stream.Collectors;
 
 public class CommandConsole {
 
@@ -90,8 +89,8 @@ public class CommandConsole {
 
   private Coordinates processCoordinatesFrom(final String coordinateDefinition) {
     return new Coordinates(
-        coordinateXFrom(coordinateDefinition),
-        coordinateYFrom(coordinateDefinition));
+      coordinateXFrom(coordinateDefinition),
+      coordinateYFrom(coordinateDefinition));
   }
 
   private int coordinateXFrom(final String mowerDefinition) {
@@ -105,8 +104,8 @@ public class CommandConsole {
   private Mower processMowerWith(final String mowerDefinition) {
     var mowerCoordinates = processCoordinatesFrom(mowerDefinition);
     return new Mower(
-        mowerCoordinates,
-        processFaceToFrom(mowerDefinition)
+      mowerCoordinates,
+      processFaceToFrom(mowerDefinition)
     );
   }
 
@@ -116,9 +115,9 @@ public class CommandConsole {
 
   private List<Command> processCommandsWith(final String mowerCommands) {
     return Arrays
-        .stream(mowerCommands.split(COMMANDS_SEPARATOR_REGEX))
-        .map(Command::fromCode)
-        .collect(Collectors.toList());
+      .stream(mowerCommands.split(COMMANDS_SEPARATOR_REGEX))
+      .map(Command::fromCode)
+      .toList();
   }
 
   private boolean processIsFinishedWith(final String isFinished) {

@@ -26,13 +26,13 @@ class CoordinateShould {
   @Test
   void throwCoordinatesMustBePositiveNumbersIfCreatesACoordinatesWithCoordinateXZeroOrLess() {
     assertThrows(CoordinatesMustBePositiveNumbers.class,
-        () -> new Coordinates(LESS_THAN_ZERO_DIMENSION, COORDINATE_Y));
+      () -> new Coordinates(LESS_THAN_ZERO_DIMENSION, COORDINATE_Y));
   }
 
   @Test
   void throwCoordinatesMustBePositiveNumbersIfCreatesACoordinatesWithCoordinateYZeroOrLess() {
     assertThrows(CoordinatesMustBePositiveNumbers.class,
-        () -> new Coordinates(COORDINATE_X, LESS_THAN_ZERO_DIMENSION));
+      () -> new Coordinates(COORDINATE_X, LESS_THAN_ZERO_DIMENSION));
   }
 
   @Test
@@ -54,7 +54,7 @@ class CoordinateShould {
     var zeroCoordinates = zeroCoordinates();
     var otherCoordinates = otherCoordinates();
     assertThrows(CoordinatesAreOutside.class,
-        () -> otherCoordinatesAboveByHeight.verifyAreInside(zeroCoordinates, otherCoordinates));
+      () -> otherCoordinatesAboveByHeight.verifyAreInside(zeroCoordinates, otherCoordinates));
   }
 
   @Test
@@ -63,7 +63,7 @@ class CoordinateShould {
     var zeroCoordinates = zeroCoordinates();
     var otherCoordinates = otherCoordinates();
     assertThrows(CoordinatesAreOutside.class,
-        () -> otherCoordinatesAboveByWidth.verifyAreInside(zeroCoordinates, otherCoordinates));
+      () -> otherCoordinatesAboveByWidth.verifyAreInside(zeroCoordinates, otherCoordinates));
   }
 
   @Test
@@ -72,7 +72,7 @@ class CoordinateShould {
     var coordinates = coordinates();
     var otherCoordinates = otherCoordinates();
     assertThrows(CoordinatesAreOutside.class,
-        () -> coordinatesBelowByHeight.verifyAreInside(coordinates, otherCoordinates));
+      () -> coordinatesBelowByHeight.verifyAreInside(coordinates, otherCoordinates));
   }
 
   @Test
@@ -81,7 +81,7 @@ class CoordinateShould {
     var coordinates = coordinates();
     var otherCoordinates = otherCoordinates();
     assertThrows(CoordinatesAreOutside.class,
-        () -> coordinatesBelowByWidth.verifyAreInside(coordinates, otherCoordinates));
+      () -> coordinatesBelowByWidth.verifyAreInside(coordinates, otherCoordinates));
   }
 
   @Test
@@ -117,7 +117,7 @@ class CoordinateShould {
 
   @Test
   void ensureOtherClassIsNotEqualsToCoordinates() {
-    assertNotEquals(coordinates(), "String class");
+    assertNotEquals(coordinates(), otherObject());
   }
 
   @Test
@@ -143,6 +143,10 @@ class CoordinateShould {
   @Test
   void ensureTwoCoordinatesWithDifferentValuesHaveDifferentHashCode() {
     assertThat(coordinates()).doesNotHaveSameHashCodeAs(otherCoordinates());
+  }
+
+  private Object otherObject() {
+    return Object.class;
   }
 
   private Coordinates zeroCoordinates() {

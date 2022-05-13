@@ -9,14 +9,12 @@ import java.util.Scanner;
 
 public class MowerApp {
 
-  private static ConsoleApplication consoleApplication = new ConsoleApplication(systemInputCommandConsole());
-
   public static void main(String... args) {
-    consoleApplication.start(new ExecuteMowerCommandsInPlateau());
+    consoleApplication().start(new ExecuteMowerCommandsInPlateau());
   }
 
-  static void initForTestPurposes(final ConsoleApplication testConsoleApplication) {
-    consoleApplication = testConsoleApplication;
+  private static ConsoleApplication consoleApplication() {
+    return new ConsoleApplication(systemInputCommandConsole());
   }
 
   private static CommandConsole systemInputCommandConsole() {

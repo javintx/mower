@@ -18,15 +18,9 @@ public final class Mower {
 
   public void executeCommand(final Command command) {
     switch (command) {
-      case MOVE:
-        moveForward();
-        break;
-      case LEFT:
-        spinLeft();
-        break;
-      case RIGHT:
-        spinRight();
-        break;
+      case MOVE -> moveForward();
+      case LEFT -> spinLeft();
+      case RIGHT -> spinRight();
     }
   }
 
