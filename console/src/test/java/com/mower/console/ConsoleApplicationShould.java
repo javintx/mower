@@ -1,30 +1,14 @@
 package com.mower.console;
 
 import com.mower.domain.CardinalPoint;
-import com.mower.domain.Command;
-import com.mower.domain.Mower;
-import com.mower.domain.Plateau;
-import com.mower.domain.valueobjects.Coordinates;
-import com.mower.domain.valueobjects.FaceTo;
 import com.mower.usecase.ExecuteMowerCommandsInPlateau;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.internal.verification.Times;
-import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.List;
+import java.util.Scanner;
 
 import static com.mower.domain.CardinalPoint.NORTH;
-import static com.mower.domain.Command.LEFT;
-import static com.mower.domain.Command.MOVE;
-import static com.mower.domain.Command.RIGHT;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-@ExtendWith(MockitoExtension.class)
 class ConsoleApplicationShould {
 
   private static final int ANY_WIDTH = 5;
@@ -34,79 +18,58 @@ class ConsoleApplicationShould {
   private static final int ANY_OTHER_INITIAL_COORDINATE_X = 1;
   private static final int ANY_OTHER_INITIAL_COORDINATE_Y = 0;
   private static final CardinalPoint ANY_CARDINAL_POINT = NORTH;
-  private static final List<Command> ANY_MOWER_COMMANDS = List.of(LEFT, RIGHT, MOVE);
-  private static final List<Command> TO_OUTSIDE_MOWER_COMMANDS = List.of(MOVE, MOVE, MOVE, MOVE, MOVE, MOVE, MOVE);
-  private static final List<Command> NO_MOWER_COMMANDS = List.of();
-  private static final List<Command> ANY_OTHER_MOWER_COMMANDS = List.of(MOVE);
-  private static final boolean FINISHED_VALUE = true;
-  private static final boolean NO_FINISHED_VALUE = false;
+  private static final String ANY_MOWER_COMMANDS = "LRM";
+  private static final String TO_OUTSIDE_MOWER_COMMANDS = "MMMMMMM";
+  private static final String NO_MOWER_COMMANDS = "";
+  private static final String ANY_OTHER_MOWER_COMMANDS = "M";
+  private static final String FINISHED_VALUE = "y";
+  private static final String NO_FINISHED_VALUE = "n";
 
-  @Mock
-  CommandConsole commandConsole;
+  private CommandConsole commandConsole;
   private ConsoleApplication consoleApplication;
-
-  @BeforeEach
-  void setUp() {
-    this.consoleApplication = new ConsoleApplication(commandConsole);
-  }
 
   @Test
   void executeMowerCommandsInPlateau() {
-    when(commandConsole.readPlateau()).thenReturn(anyPlateau());
-    when(commandConsole.readMowerGiven(any(Plateau.class))).thenReturn(anyMower());
-    when(commandConsole.readMowerCommands()).thenReturn(ANY_MOWER_COMMANDS);
-    when(commandConsole.readIsFinished()).thenReturn(FINISHED_VALUE);
-    consoleApplication.start(new ExecuteMowerCommandsInPlateau());
-    verify(commandConsole).printSituationOf(any(Mower.class));
+    commandConsole = commandConsole(anyPlateau(), anyMower(), ANY_MOWER_COMMANDS, FINISHED_VALUE);
+    consoleApplication = new ConsoleApplication(commandConsole);
+
+    assertDoesNotThrow(() -> consoleApplication.start(new ExecuteMowerCommandsInPlateau()));
   }
+
 
   @Test
   void executeMowerCommandsInPlateauThatGoOutsideOfThePlateau() {
-    when(commandConsole.readPlateau()).thenReturn(anyPlateau());
-    when(commandConsole.readMowerGiven(any(Plateau.class))).thenReturn(anyMower());
-    when(commandConsole.readMowerCommands()).thenReturn(TO_OUTSIDE_MOWER_COMMANDS);
-    when(commandConsole.readIsFinished()).thenReturn(FINISHED_VALUE);
-    consoleApplication.start(new ExecuteMowerCommandsInPlateau());
-    verify(commandConsole).printErrorMessage(any(String.class));
+    commandConsole = commandConsole(anyPlateau(), anyMower(), TO_OUTSIDE_MOWER_COMMANDS, FINISHED_VALUE);
+    consoleApplication = new ConsoleApplication(commandConsole);
+
+    assertDoesNotThrow(() -> consoleApplication.start(new ExecuteMowerCommandsInPlateau()));
   }
 
   @Test
   void executeMowerCommandsInPlateauWhereCrashesTwoMowers() {
-    when(commandConsole.readPlateau()).thenReturn(anyPlateau());
-    when(commandConsole.readMowerGiven(any(Plateau.class))).thenReturn(anyMower()).thenReturn(anyOtherMower());
-    when(commandConsole.readMowerCommands()).thenReturn(NO_MOWER_COMMANDS).thenReturn(ANY_OTHER_MOWER_COMMANDS);
-    when(commandConsole.readIsFinished()).thenReturn(NO_FINISHED_VALUE).thenReturn(FINISHED_VALUE);
-    consoleApplication.start(new ExecuteMowerCommandsInPlateau());
-    verify(commandConsole, new Times(2)).printSituationOf(any(Mower.class));
-    verify(commandConsole).printErrorMessage(any(String.class));
+    commandConsole = commandConsole(
+      anyPlateau(), anyMower(), NO_MOWER_COMMANDS, NO_FINISHED_VALUE,
+      anyOtherMower(), ANY_OTHER_MOWER_COMMANDS, FINISHED_VALUE
+    );
+    consoleApplication = new ConsoleApplication(commandConsole);
+
+    assertDoesNotThrow(() -> consoleApplication.start(new ExecuteMowerCommandsInPlateau()));
   }
 
-  private Plateau anyPlateau() {
-    return new Plateau(anyPlateauCoordinates());
+  private CommandConsole commandConsole(String... commands) {
+    return new CommandConsole(new Scanner(String.join("\n", commands)));
   }
 
-  private Coordinates anyPlateauCoordinates() {
-    return new Coordinates(ANY_WIDTH, ANY_HEIGHT);
+  private String anyPlateau() {
+    return ANY_WIDTH + " " + ANY_HEIGHT;
   }
 
-  private Mower anyMower() {
-    return new Mower(anyCoordinates(), anyFaceTo());
+  private String anyMower() {
+    return ANY_INITIAL_COORDINATE_X + " " + ANY_INITIAL_COORDINATE_Y + " " + ANY_CARDINAL_POINT.code();
   }
 
-  private Coordinates anyCoordinates() {
-    return new Coordinates(ANY_INITIAL_COORDINATE_X, ANY_INITIAL_COORDINATE_Y);
-  }
-
-  private FaceTo anyFaceTo() {
-    return new FaceTo(ANY_CARDINAL_POINT);
-  }
-
-  private Mower anyOtherMower() {
-    return new Mower(anyOtherCoordinates(), anyFaceTo());
-  }
-
-  private Coordinates anyOtherCoordinates() {
-    return new Coordinates(ANY_OTHER_INITIAL_COORDINATE_X, ANY_OTHER_INITIAL_COORDINATE_Y);
+  private String anyOtherMower() {
+    return ANY_OTHER_INITIAL_COORDINATE_X + " " + ANY_OTHER_INITIAL_COORDINATE_Y + ANY_CARDINAL_POINT.code();
   }
 
 }

@@ -1,15 +1,12 @@
 package com.mower.console;
 
+import com.mower.domain.CardinalPoint;
 import com.mower.domain.Command;
 import com.mower.domain.Mower;
 import com.mower.domain.Plateau;
 import com.mower.domain.valueobjects.Coordinates;
-import org.junit.jupiter.api.BeforeEach;
+import com.mower.domain.valueobjects.FaceTo;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.internal.verification.Times;
-import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.List;
 import java.util.Scanner;
@@ -18,10 +15,8 @@ import static com.mower.domain.Command.LEFT;
 import static com.mower.domain.Command.MOVE;
 import static com.mower.domain.Command.RIGHT;
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 
-@ExtendWith(MockitoExtension.class)
 class CommandConsoleShould {
 
   private static final String VALID_INPUT_PLATEAU_DIMENSIONS = "5 5";
@@ -42,59 +37,61 @@ class CommandConsoleShould {
   private static final String VALID_INPUT_IS_NOT_FINISHED = "N";
   private static final String INVALID_INPUT_IS_FINISHED = "INVALID";
 
-  @Mock
-  Scanner scannerMocked;
-  @Mock
-  Mower mowerMocked;
+  private Scanner scannerMocked;
   private CommandConsole commandConsole;
-
-  @BeforeEach
-  void setUp() {
-    commandConsole = new CommandConsole(scannerMocked);
-  }
 
   @Test
   void readPlateau() {
-    when(scannerMocked.nextLine()).thenReturn(INVALID_INPUT_PLATEAU_DIMENSIONS, VALID_INPUT_PLATEAU_DIMENSIONS);
+    scannerMocked = scannerMocked(INVALID_INPUT_PLATEAU_DIMENSIONS, VALID_INPUT_PLATEAU_DIMENSIONS);
+    commandConsole = new CommandConsole(scannerMocked);
+
     assertThat(commandConsole.readPlateau()).isNotNull();
-    verify(scannerMocked, new Times(2)).nextLine();
   }
+
 
   @Test
   void readMower() {
-    when(scannerMocked.nextLine())
-        .thenReturn(INPUT_MOWER_DEFINITION_OUTSIDE_PLATEAU)
-        .thenReturn(INPUT_MOWER_DEFINITION_IN_OCCUPIED_COORDINATE)
-        .thenReturn(VALID_INPUT_MOWER_DEFINITION);
+    scannerMocked = scannerMocked(INPUT_MOWER_DEFINITION_OUTSIDE_PLATEAU,
+      INPUT_MOWER_DEFINITION_IN_OCCUPIED_COORDINATE,
+      VALID_INPUT_MOWER_DEFINITION);
+    commandConsole = new CommandConsole(scannerMocked);
+
     assertThat(commandConsole.readMowerGiven(plateauWithOccupiedCoordinates()).coordinates()).isEqualTo(validMowerCoordinates());
-    verify(scannerMocked, new Times(3)).nextLine();
   }
 
   @Test
   void readMowerCommands() {
-    when(scannerMocked.nextLine()).thenReturn(INVALID_INPUT_MOWER_COMMANDS, VALID_INPUT_MOWER_COMMANDS);
+    scannerMocked = scannerMocked(INVALID_INPUT_MOWER_COMMANDS, VALID_INPUT_MOWER_COMMANDS);
+    commandConsole = new CommandConsole(scannerMocked);
+
     assertThat(commandConsole.readMowerCommands()).isEqualTo(expectedMowerCommands());
-    verify(scannerMocked, new Times(2)).nextLine();
   }
 
   @Test
   void readIsFinished() {
-    when(scannerMocked.nextLine()).thenReturn(INVALID_INPUT_IS_FINISHED, VALID_INPUT_IS_FINISHED);
+    scannerMocked = scannerMocked(INVALID_INPUT_IS_FINISHED, VALID_INPUT_IS_FINISHED);
+    commandConsole = new CommandConsole(scannerMocked);
+
     assertThat(commandConsole.readIsFinished()).isTrue();
-    verify(scannerMocked, new Times(2)).nextLine();
   }
 
   @Test
   void readIsNotFinished() {
-    when(scannerMocked.nextLine()).thenReturn(VALID_INPUT_IS_NOT_FINISHED);
+    scannerMocked = scannerMocked(VALID_INPUT_IS_NOT_FINISHED);
+    commandConsole = new CommandConsole(scannerMocked);
+
     assertThat(commandConsole.readIsFinished()).isFalse();
-    verify(scannerMocked, new Times(1)).nextLine();
   }
 
   @Test
   void printSituationOfMower() {
-    commandConsole.printSituationOf(mowerMocked);
-    verify(mowerMocked, new Times(1)).situation();
+    var mower = new Mower(validMowerCoordinates(), new FaceTo(CardinalPoint.EAST));
+    commandConsole = new CommandConsole(null);
+    assertDoesNotThrow(() -> commandConsole.printSituationOf(mower));
+  }
+
+  private Scanner scannerMocked(String... commands) {
+    return new Scanner(String.join("\n", commands));
   }
 
   private Plateau plateauWithOccupiedCoordinates() {
