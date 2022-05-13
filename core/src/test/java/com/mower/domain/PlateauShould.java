@@ -5,6 +5,7 @@ import com.mower.domain.exception.CoordinatesAreOutside;
 import com.mower.domain.valueobjects.Coordinates;
 import org.junit.jupiter.api.Test;
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class PlateauShould {
@@ -19,27 +20,37 @@ class PlateauShould {
 
   @Test
   void throwCoordinatesAreOutsidePlateauIfOutsizeCoordinates() {
-    assertThrows(CoordinatesAreOutside.class, () -> validPlateau().verifyCoordinates(outsideCoordinates()));
+    var validPlateau = validPlateau();
+    var outsideCoordinates = outsideCoordinates();
+    assertThrows(CoordinatesAreOutside.class, () -> validPlateau.verifyCoordinates(outsideCoordinates));
   }
 
   @Test
   void throwCoordinatesAreOutsidePlateauIfOutsizeCoordinatesByCoordinateX() {
-    assertThrows(CoordinatesAreOutside.class, () -> validPlateau().verifyCoordinates(outsideCoordinatesByCoordinateX()));
+    var validPlateau = validPlateau();
+    var outsideCoordinatesByCoordinateX = outsideCoordinatesByCoordinateX();
+    assertThrows(CoordinatesAreOutside.class, () -> validPlateau.verifyCoordinates(outsideCoordinatesByCoordinateX));
   }
 
   @Test
   void throwCoordinatesAreOutsidePlateauIfOutsizeCoordinatesByCoordinateY() {
-    assertThrows(CoordinatesAreOutside.class, () -> validPlateau().verifyCoordinates(outsideCoordinatesByCoordinateY()));
+    var validPlateau = validPlateau();
+    var outsideCoordinatesByCoordinateY = outsideCoordinatesByCoordinateY();
+    assertThrows(CoordinatesAreOutside.class, () -> validPlateau.verifyCoordinates(outsideCoordinatesByCoordinateY));
   }
 
   @Test
   void throwCoordinatesAreOccupiedIfCoordinatesAreOccupiedInThePlateau() {
-    assertThrows(CoordinatesAreOccupied.class, () -> validPlateauWithOccupiedCoordinate().verifyCoordinates(validCoordinates()));
+    var validPlateauWithOccupiedCoordinate = validPlateauWithOccupiedCoordinate();
+    var validCoordinates = validCoordinates();
+    assertThrows(CoordinatesAreOccupied.class, () -> validPlateauWithOccupiedCoordinate.verifyCoordinates(validCoordinates));
   }
 
   @Test
   void verifyCoordinates() {
-    validPlateau().verifyCoordinates(validCoordinates());
+    var validPlateau = validPlateau();
+    var validCoordinates = validCoordinates();
+    assertDoesNotThrow(() -> validPlateau.verifyCoordinates(validCoordinates));
   }
 
   private Plateau validPlateau() {

@@ -9,6 +9,7 @@ import static com.mower.domain.CardinalPoint.NORTH;
 import static com.mower.domain.CardinalPoint.SOUTH;
 import static com.mower.domain.CardinalPoint.WEST;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
@@ -41,31 +42,46 @@ class CoordinateShould {
 
   @Test
   void verifyInsideCoordinates() {
-    coordinatesInside().verifyAreInside(zeroCoordinates(), otherCoordinates());
+    var coordinatesInside = coordinatesInside();
+    var zeroCoordinates = zeroCoordinates();
+    var otherCoordinates = otherCoordinates();
+    assertDoesNotThrow(() -> coordinatesInside.verifyAreInside(zeroCoordinates, otherCoordinates));
   }
 
   @Test
   void throwCoordinatesAreOutsideWhenVerifyOutsideAboveCoordinatesByHeight() {
+    var otherCoordinatesAboveByHeight = otherCoordinatesAboveByHeight();
+    var zeroCoordinates = zeroCoordinates();
+    var otherCoordinates = otherCoordinates();
     assertThrows(CoordinatesAreOutside.class,
-        () -> otherCoordinatesAboveByHeight().verifyAreInside(zeroCoordinates(), otherCoordinates()));
+        () -> otherCoordinatesAboveByHeight.verifyAreInside(zeroCoordinates, otherCoordinates));
   }
 
   @Test
   void throwCoordinatesAreOutsideWhenVerifyOutsideAboveCoordinatesByWidth() {
+    var otherCoordinatesAboveByWidth = otherCoordinatesAboveByWidth();
+    var zeroCoordinates = zeroCoordinates();
+    var otherCoordinates = otherCoordinates();
     assertThrows(CoordinatesAreOutside.class,
-        () -> otherCoordinatesAboveByWidth().verifyAreInside(zeroCoordinates(), otherCoordinates()));
+        () -> otherCoordinatesAboveByWidth.verifyAreInside(zeroCoordinates, otherCoordinates));
   }
 
   @Test
   void throwCoordinatesAreOutsideWhenVerifyOutsideBelowCoordinatesByHeight() {
+    var coordinatesBelowByHeight = coordinatesBelowByHeight();
+    var coordinates = coordinates();
+    var otherCoordinates = otherCoordinates();
     assertThrows(CoordinatesAreOutside.class,
-        () -> coordinatesBelowByHeight().verifyAreInside(coordinates(), otherCoordinates()));
+        () -> coordinatesBelowByHeight.verifyAreInside(coordinates, otherCoordinates));
   }
 
   @Test
   void throwCoordinatesAreOutsideWhenVerifyOutsideBelowCoordinatesByWidth() {
+    var coordinatesBelowByWidth = coordinatesBelowByWidth();
+    var coordinates = coordinates();
+    var otherCoordinates = otherCoordinates();
     assertThrows(CoordinatesAreOutside.class,
-        () -> coordinatesBelowByWidth().verifyAreInside(coordinates(), otherCoordinates()));
+        () -> coordinatesBelowByWidth.verifyAreInside(coordinates, otherCoordinates));
   }
 
   @Test
@@ -121,12 +137,12 @@ class CoordinateShould {
 
   @Test
   void ensureTwoCoordinatesWithSameValuesHaveSameHashCode() {
-    assertThat(coordinates().hashCode()).isEqualTo(coordinates().hashCode());
+    assertThat(coordinates()).hasSameHashCodeAs(coordinates());
   }
 
   @Test
   void ensureTwoCoordinatesWithDifferentValuesHaveDifferentHashCode() {
-    assertThat(coordinates().hashCode()).isNotEqualTo(otherCoordinates().hashCode());
+    assertThat(coordinates()).doesNotHaveSameHashCodeAs(otherCoordinates());
   }
 
   private Coordinates zeroCoordinates() {

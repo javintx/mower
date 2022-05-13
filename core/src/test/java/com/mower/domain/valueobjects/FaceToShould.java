@@ -103,12 +103,12 @@ class FaceToShould {
 
   @Test
   void ensureOtherClassIsNotEqualsToFaceTo() {
-    assertNotEquals(faceToNorth(), "String class");
+    assertThat(faceToNorth()).isNotEqualTo(String.class);
   }
 
   @Test
   void ensureNullIsNotEqualsToFaceTo() {
-    assertNotEquals(faceToNorth(), null);
+    assertThat(faceToNorth()).isNotEqualTo(null);
   }
 
   @Test
@@ -118,12 +118,12 @@ class FaceToShould {
 
   @Test
   void ensureTwoFaceToWithSameValuesHaveSameHashCode() {
-    assertThat(faceToNorth().hashCode()).isEqualTo(faceToNorth().hashCode());
+    assertThat(faceToNorth()).hasSameHashCodeAs(faceToNorth());
   }
 
   @Test
   void ensureTwoFaceToWithDifferentValuesHaveDifferentHashCode() {
-    assertThat(faceToNorth().hashCode()).isNotEqualTo(faceToSouth().hashCode());
+    assertThat(faceToNorth()).doesNotHaveSameHashCodeAs(faceToSouth());
   }
 
   private FaceTo faceToNorth() {
