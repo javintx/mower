@@ -1,108 +1,108 @@
 plugins {
-    id "java-library"
-    id "com.github.spotbugs" version "5.0.7" apply false
-    id "org.sonarqube" version "3.3"
+  id "java-library"
+  id "com.github.spotbugs" version "5.0.12" apply false
+  id "org.sonarqube" version "3.4.0.2513"
 }
 
 wrapper {
-    gradleVersion = "7.4.2"
+    gradleVersion = "7.5.1"
 }
 
 dependencies {
-    implementation project(":application")
-    implementation project(":console")
-    implementation project(":core")
+  implementation project(":application")
+  implementation project(":console")
+  implementation project(":core")
 }
 
+group "com.mower"
+version "1.0.0"
+
 jar {
-    manifest {
-        attributes("Main-Class": "com.mower.MowerApp")
-    }
+  manifest {
+    attributes("Main-Class": "com.mower.application.MowerApp")
+  }
 
-    from {
-        configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
-    }
+  from {
+    configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
+  }
 
-    duplicatesStrategy = DuplicatesStrategy.INCLUDE
+  duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }
 
 subprojects {
-    repositories {
-        mavenCentral()
-    }
+  repositories {
+    mavenCentral()
+  }
 
-    apply plugin: "java"
-    apply plugin: "jacoco"
-    apply plugin: "pmd"
-    apply plugin: "com.github.spotbugs"
+  apply plugin: "java"
+  apply plugin: "jacoco"
+  apply plugin: "pmd"
+  apply plugin: "com.github.spotbugs"
 
-    java {
-        toolchain {
-            languageVersion = JavaLanguageVersion.of(17)
-        }
+  java {
+    toolchain {
+      languageVersion = JavaLanguageVersion.of(17)
     }
+  }
 
-    group "com.mower"
-    version "1.0.0"
+  dependencies {
+    testImplementation "org.assertj:assertj-core:3.23.1"
+    testImplementation "org.mockito:mockito-junit-jupiter:4.8.0"
+    testImplementation "org.junit.jupiter:junit-jupiter-params:5.9.1"
+    testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.9.1"
+  }
 
-    dependencies {
-        testImplementation "org.assertj:assertj-core:3.19.0"
-        testImplementation "org.mockito:mockito-junit-jupiter:3.9.0"
-        testImplementation "org.junit.jupiter:junit-jupiter-params:5.7.0"
-        testRuntimeOnly "org.junit.jupiter:junit-jupiter-engine:5.7.0"
-    }
+  test {
+    useJUnitPlatform()
+  }
 
-    test {
-        useJUnitPlatform()
-    }
+  check.finalizedBy(jacocoTestReport)
 
-    check.finalizedBy(jacocoTestReport)
+  pmd {
+    ignoreFailures = true
+  }
+  pmdMain {
+    reports {
+      xml.required = true
+      html.required = true
+    }
+  }
+  pmdTest {
+    reports {
+      xml.required = true
+      html.required = true
+    }
+  }
 
-    pmd {
-        ignoreFailures = true
+  spotbugs {
+    ignoreFailures = true
+  }
+  spotbugsMain {
+    reports {
+      xml.required = true
+      html.required = true
     }
-    pmdMain {
-        reports {
-            xml.required = true
-            html.required = true
-        }
+  }
+  spotbugsTest {
+    reports {
+      xml.required = true
+      html.required = true
     }
-    pmdTest {
-        reports {
-            xml.required = true
-            html.required = true
-        }
-    }
+  }
 
-    spotbugs {
-        ignoreFailures = true
+  jacocoTestReport {
+    reports {
+      xml.required = true
+      html.required = true
     }
-    spotbugsMain {
-        reports {
-            xml.required = true
-            html.required = true
-        }
-    }
-    spotbugsTest {
-        reports {
-            xml.required = true
-            html.required = true
-        }
-    }
-
-    jacocoTestReport {
-        reports {
-            xml.required = true
-            html.required = true
-        }
-    }
+  }
 }
 
 sonarqube {
-    properties {
-        property "sonar.projectKey", "javintx_mower"
-        property "sonar.organization", "javintx"
-        property "sonar.host.url", "https://sonarcloud.io"
-    }
+  properties {
+    property "sonar.projectKey", "javintx_mower"
+    property "sonar.organization", "javintx"
+    property "sonar.host.url", "https://sonarcloud.io"
+  }
 }
 

@@ -29,8 +29,8 @@ And the mower could face to one of the cardinal points:
 
 - The coordinates are always positive numbers.
 - The mower executes the command and then verify if it has any problem.
-    + When mower move outside the plateau, the mower stops and does not occupy any coordinate in the plateau.
-    + When mower crashed with any previous mower, the mower stops and occupy the same coordinate as crashed mower.
+  + When mower move outside the plateau, the mower stops and does not occupy any coordinate in the plateau.
+  + When mower crashed with any previous mower, the mower stops and occupy the same coordinate as crashed mower.
 - The application is command line interactive. The user experience is guided through messages.
 
 ## Architecture
@@ -38,7 +38,7 @@ And the mower could face to one of the cardinal points:
 - Hexagonal architecture implemented using Test-driven development
   ([TDD](https://en.wikipedia.org/wiki/Test-driven_development)) in Java 11.
 - JUnit5 with Mockito is used for unit tests.
-    + mock-maker-inline extension used for final classes.
+  + mock-maker-inline extension used for final classes.
 - The mower application has been done respecting the [SOLID](https://en.wikipedia.org/wiki/SOLID)
   and [KISS](https://en.wikipedia.org/wiki/KISS_principle) principles and applying Clean Code as far as possible.
 
@@ -63,25 +63,33 @@ Hexagon with the application logic of the mower application. It contains the jav
 
 In the `rootDirectory` execute:
 
-> gradlew clean build
+```shell
+gradlew clean build
+```
 
 ## Execute tests
 
 In the `rootDirectory` execute:
 
-> gradlew clean test
+```shell
+gradlew clean test
+```
 
 ## Obtain JaCoCo report
 
 In the `rootDirectory` execute:
 
-> gradlew clean test jacocoTestReport
+```shell
+gradlew clean test jacocoTestReport
+```
 
 ## Execute the application
 
 In the `rootDirectory/build/libs` execute:
 
-> java -jar mower-1.0.0.jar
+```shell
+java -jar build/libs/mower-1.0.0.jar
+```
 
 ---
 
@@ -91,13 +99,17 @@ In the `rootDirectory/build/libs` execute:
 
 To generate a Docker image with "mower" name after build the project, execute the next command:
 
-> docker build -t mower
+```shell
+docker build -t mower .
+```
 
 ## Run Docker image
 
 To run the Docker image "mower", execute the next command:
 
-> docker run -i -t mower
+```shell
+docker run -i -t mower
+```
 
 The -i and -t parameters provides input using your keyboard while the outputs is logged to your terminal.
 
@@ -111,8 +123,8 @@ After execute the application, the user will be guided through console:
   numbers).
 - Secondly, it is necessary to insert the mower coordinates (represented by a positive numbers) and orientation
   (represented by one of the four cardinal points: 'N', 'E', 'S', W').
-    + A mower can only be valid if their coordinates are inside the plateau and there is no previous mower in the same
-      coordinates.
+  + A mower can only be valid if their coordinates are inside the plateau and there is no previous mower in the same
+    coordinates.
 - In third place, it is necessary to insert the mower commands (represented by the letters: 'L', 'R' or 'M').
 
 After the commands inserted, the mower executes them and prints their final position if is inside the plateau.
